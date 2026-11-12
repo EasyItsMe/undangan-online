@@ -43,7 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 11. Inisialisasi Micro-interaction Ripple Effect
   initRippleEffect();
 
-  // 12. Inisialisasi AOS (Animate on Scroll)
+  // 12. Inisialisasi Animasi Mengetik Teks (Typewriter Effect)
+  initTypewriterEffect();
+
+  // 13. Inisialisasi AOS (Animate on Scroll)
   if (typeof AOS !== 'undefined') {
     AOS.init({
       duration: 800,
@@ -101,11 +104,6 @@ if (openBtn) {
 
     // Mainkan Audio (Bypass Autoplay Policy)
     playAudio();
-
-    // Luncurkan Efek Percikan Api Perayaan
-    if (typeof window.burstCoverSparks === 'function') {
-      window.burstCoverSparks(75);
-    }
 
     // Luncurkan Efek Confetti & Hujan Emas
     launchCelebrationConfetti();
@@ -834,6 +832,9 @@ function initPreloader() {
       if (progressBar) progressBar.style.width = '100%';
       setTimeout(() => {
         preloader.classList.add('fade-out');
+        if (typeof window.startCoverPhotoRingSparks === 'function') {
+          window.startCoverPhotoRingSparks();
+        }
         setTimeout(() => {
           preloader.style.display = 'none';
         }, 800);
@@ -1501,9 +1502,9 @@ function initPreloaderSparks() {
 
 /**
  * 20.2 PERCIKAN API PADA FOTO UTAMA HALAMAN PERTAMA (COVER GOLDEN RING)
+ * Percikan api HANYA menyala saat cincin berputar/memuat (3 detik), 
+ * dan HILANG SEPENUHNYA saat loading lingkaran selesai.
  */
-let coverSparksEngine = null;
-
 function initCoverPhotoSparks() {
   const canvas = document.getElementById('cover-sparks-canvas');
   const ringWrapper = document.querySelector('.sparkling-ring-wrapper');
@@ -1512,7 +1513,8 @@ function initCoverPhotoSparks() {
   const ctx = canvas.getContext('2d');
   const sparks = [];
   let animId = null;
-  let angle = -Math.PI / 2; // Mulai dari arah jam 12
+  let ringStartTime = null;
+  const RING_DURATION_MS = 3000; // Tepat 3.0 detik sesuai animasi CSS drawRing
 
   function resize() {
     const rect = ringWrapper.getBoundingClientRect();
@@ -1524,38 +1526,32 @@ function initCoverPhotoSparks() {
   resize();
   window.addEventListener('resize', resize);
 
-  coverSparksEngine = {
-    burst: function(count = 60) {
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const radius = (canvas.width - 100) / 2 * 0.94;
-
-      for (let i = 0; i < count; i++) {
-        const theta = Math.random() * Math.PI * 2;
-        const spawnX = centerX + Math.cos(theta) * radius;
-        const spawnY = centerY + Math.sin(theta) * radius;
-        const speed = Math.random() * 6.5 + 2.5;
-        const vx = Math.cos(theta) * speed + (Math.random() - 0.5) * 1.5;
-        const vy = Math.sin(theta) * speed - 1.2;
-        sparks.push(new FireSpark(spawnX, spawnY, vx, vy, Math.random() > 0.35 ? 'spark' : 'ember'));
-      }
+  function startCoverPhotoRingSparks() {
+    // Sinkronkan ulang animasi garis emas SVG
+    const ringComet = document.querySelector('.ring-comet');
+    if (ringComet) {
+      ringComet.style.animation = 'none';
+      void ringComet.offsetWidth; // Force reflow
+      ringComet.style.animation = 'drawRing 3s ease-out forwards';
     }
-  };
 
-  window.burstCoverSparks = coverSparksEngine.burst;
-
-  // Letusan percikan awal saat foto pertama dan cincin selesai memuat
-  setTimeout(() => {
-    coverSparksEngine.burst(35);
-  }, 450);
-
-  function render() {
-    const cover = document.getElementById('cover-overlay');
-    // Jika cover sudah dibuka dan semua percikan selesai, hentikan loop untuk hemat daya
-    if (cover && cover.classList.contains('opened') && sparks.length === 0) {
-      if (animId) cancelAnimationFrame(animId);
-      return;
+    ringStartTime = performance.now();
+    if (!animId) {
+      animId = requestAnimationFrame(render);
     }
+  }
+
+  window.startCoverPhotoRingSparks = startCoverPhotoRingSparks;
+
+  // Jika preloader sudah selesai atau tidak ada, jalankan langsung setelah 300ms
+  const preloader = document.getElementById('preloader');
+  if (!preloader || preloader.style.display === 'none' || preloader.classList.contains('fade-out')) {
+    setTimeout(startCoverPhotoRingSparks, 300);
+  }
+
+  function render(now) {
+    if (!ringStartTime) ringStartTime = now;
+    const elapsed = now - ringStartTime;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -1563,54 +1559,47 @@ function initCoverPhotoSparks() {
     const centerY = canvas.height / 2;
     const radius = (canvas.width - 100) / 2 * 0.94;
 
-    // Perputaran kepala komet mengelilingi foto
-    angle += 0.038;
+    // KETIKA LOADING LINGKARAN SEDANG BERJALAN (0 s/d 3.0 detik)
+    if (elapsed < RING_DURATION_MS) {
+      // Easing out matching CSS drawRing
+      const linearP = elapsed / RING_DURATION_MS;
+      const easeOutP = 1 - Math.pow(1 - linearP, 2);
 
-    if (!cover || !cover.classList.contains('opened')) {
-      // 1. Semburkan percikan api terus-menerus dari kepala komet yang memutari foto
+      // Posisi kepala lingkaran yang sedang digambar (mulai dari jam 12: -PI/2)
+      const currentAngle = -Math.PI / 2 + easeOutP * (Math.PI * 2);
+
+      // Semburan percikan api keluar dari kepala lingkaran yang bergerak
       for (let i = 0; i < 4; i++) {
-        const jitterAngle = angle + (Math.random() - 0.5) * 0.22;
-        const spawnX = centerX + Math.cos(jitterAngle) * radius;
-        const spawnY = centerY + Math.sin(jitterAngle) * radius;
+        const jitter = currentAngle + (Math.random() - 0.5) * 0.2;
+        const spawnX = centerX + Math.cos(jitter) * radius;
+        const spawnY = centerY + Math.sin(jitter) * radius;
 
-        // Semprot ke arah berlawanan putaran dan memercik keluar
-        const tangent = jitterAngle + Math.PI / 2;
-        const outward = jitterAngle;
-        const sprayAngle = tangent + Math.PI + (Math.random() - 0.5) * 1.1;
+        // Semprot ke arah berlawanan jarum jam dan memancar ke luar
+        const sprayAngle = jitter + Math.PI + (Math.random() - 0.5) * 1.2;
         const speed = Math.random() * 4.2 + 1.8;
-        const vx = Math.cos(sprayAngle) * speed + Math.cos(outward) * 1.1;
-        const vy = Math.sin(sprayAngle) * speed + Math.sin(outward) * 1.1 - 0.4;
+        const vx = Math.cos(sprayAngle) * speed + Math.cos(jitter) * 1.0;
+        const vy = Math.sin(sprayAngle) * speed + Math.sin(jitter) * 1.0 - 0.5;
 
         sparks.push(new FireSpark(spawnX, spawnY, vx, vy, 'spark'));
       }
 
-      // 2. Percikan api acak di sekeliling pinggiran lingkaran foto (Crackle)
-      if (Math.random() < 0.55) {
-        const crackleAngle = Math.random() * Math.PI * 2;
-        const spawnX = centerX + Math.cos(crackleAngle) * radius;
-        const spawnY = centerY + Math.sin(crackleAngle) * radius;
-        const speed = Math.random() * 3.0 + 1.0;
-        const vx = Math.cos(crackleAngle) * speed + (Math.random() - 0.5);
-        const vy = Math.sin(crackleAngle) * speed - 0.8;
-        sparks.push(new FireSpark(spawnX, spawnY, vx, vy, 'spark'));
-      }
-
-      // 3. Butiran bara api keemasan melayang ke atas di atas foto
-      if (Math.random() < 0.35) {
-        const emberAngle = Math.random() * Math.PI * 2;
-        const spawnR = radius * Math.sqrt(Math.random());
-        const spawnX = centerX + Math.cos(emberAngle) * spawnR;
-        const spawnY = centerY + Math.sin(emberAngle) * spawnR;
-        sparks.push(new FireSpark(spawnX, spawnY, (Math.random() - 0.5) * 0.8, -(Math.random() * 1.8 + 0.8), 'ember'));
+      // Percikan halus acak sepanjang busur yang telah terbentuk
+      if (Math.random() < 0.4) {
+        const pastAngle = -Math.PI / 2 + Math.random() * easeOutP * (Math.PI * 2);
+        const spawnX = centerX + Math.cos(pastAngle) * radius;
+        const spawnY = centerY + Math.sin(pastAngle) * radius;
+        sparks.push(new FireSpark(spawnX, spawnY, (Math.random() - 0.5) * 2, -Math.random() * 1.5, 'spark'));
       }
     }
+    // KETIKA LOADING LINGKARAN TELAH SELESAI (elapsed >= 3.0 detik):
+    // EMISI PERCIKAN API BERHENTI TOTAL! Partikel tersisa akan memudar dan hilang.
 
-    // Batasi maksimum partikel untuk performa mulus 60 FPS
-    if (sparks.length > 150) {
-      sparks.splice(0, sparks.length - 150);
+    // Batasi partikel
+    if (sparks.length > 120) {
+      sparks.splice(0, sparks.length - 120);
     }
 
-    // Update & gambar semua percikan
+    // Update dan gambar partikel
     for (let i = sparks.length - 1; i >= 0; i--) {
       if (sparks[i].update()) {
         sparks[i].draw(ctx);
@@ -1619,10 +1608,136 @@ function initCoverPhotoSparks() {
       }
     }
 
+    // KETIKA SEMUA PERCIKAN TELAH MATI & LOADING LINGKARAN SELESAI:
+    // Hentikan requestAnimationFrame, bersihkan kanvas sepenuhnya!
+    if (elapsed >= RING_DURATION_MS && sparks.length === 0) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      cancelAnimationFrame(animId);
+      animId = null;
+      return;
+    }
+
     animId = requestAnimationFrame(render);
   }
-
-  animId = requestAnimationFrame(render);
 }
+
+/* ==========================================================================
+   21. TYPEWRITER ANIMATION ENGINE (ANIMASI MENGETIK DI SETIAP BAGIAN KATA-KATA)
+   ========================================================================== */
+function initTypewriterEffect() {
+  const targetSelectors = [
+    '.guest-salutation',
+    '.guest-sub',
+    '.greeting-paragraph',
+    '.greeting-ayah',
+    '.couple-parentage',
+    '.khitan-doa-quote',
+    '.timeline-story-desc',
+    '.video-event-intro',
+    '.section-desc',
+    '.thankyou-paragraph-1',
+    '.thankyou-paragraph-2',
+    '.closing-boys-mention',
+    '.typewrite-text'
+  ];
+
+  const elements = document.querySelectorAll(targetSelectors.join(', '));
+
+  // Simpan HTML asli setiap elemen
+  elements.forEach((el) => {
+    if (el.hasAttribute('data-typewriter-orig')) return;
+    const originalHtml = el.innerHTML.trim();
+    el.setAttribute('data-typewriter-orig', originalHtml);
+  });
+
+  // IntersectionObserver: Mengetik saat elemen masuk ke layar
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        if (!el.hasAttribute('data-typed')) {
+          el.setAttribute('data-typed', 'true');
+          const fullHtml = el.getAttribute('data-typewriter-orig');
+          if (fullHtml) {
+            // Atur kecepatan mengetik berdasarkan panjang teks
+            const textLen = el.textContent.length;
+            const speed = textLen > 180 ? 12 : (textLen > 80 ? 18 : 26);
+            typeHtmlElement(el, fullHtml, speed);
+          }
+          obs.unobserve(el);
+        }
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  elements.forEach((el) => {
+    observer.observe(el);
+  });
+}
+
+/**
+ * Helper: Mengetik teks karakter per karakter dengan dukungan tag HTML (<br>, <strong>, dsb)
+ */
+function typeHtmlElement(el, fullHtml, speed = 20, callback) {
+  el.innerHTML = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'typewriter-cursor';
+  cursor.innerHTML = '|';
+  el.appendChild(cursor);
+
+  let i = 0;
+  let currentHtml = '';
+
+  function step() {
+    if (i < fullHtml.length) {
+      if (fullHtml[i] === '<') {
+        // Lewati tag HTML langsung tanpa dieja satu per satu
+        const tagEnd = fullHtml.indexOf('>', i);
+        if (tagEnd !== -1) {
+          currentHtml += fullHtml.substring(i, tagEnd + 1);
+          i = tagEnd + 1;
+        } else {
+          currentHtml += fullHtml[i];
+          i++;
+        }
+      } else if (fullHtml[i] === '&') {
+        // Tangani entity HTML (&amp;, &quot;) sekaligus
+        const entityEnd = fullHtml.indexOf(';', i);
+        if (entityEnd !== -1 && entityEnd - i < 10) {
+          currentHtml += fullHtml.substring(i, entityEnd + 1);
+          i = entityEnd + 1;
+        } else {
+          currentHtml += fullHtml[i];
+          i++;
+        }
+      } else {
+        currentHtml += fullHtml[i];
+        i++;
+      }
+
+      el.innerHTML = currentHtml;
+      el.appendChild(cursor);
+
+      // Variasi jitter kecepatan alami
+      const jitter = (Math.random() - 0.5) * (speed * 0.35);
+      setTimeout(step, Math.max(8, speed + jitter));
+    } else {
+      // Pengetikan selesai, hilangkan kursor dengan anggun
+      el.innerHTML = fullHtml;
+      cursor.classList.add('finished');
+      el.appendChild(cursor);
+      setTimeout(() => {
+        cursor.remove();
+        if (typeof callback === 'function') callback();
+      }, 900);
+    }
+  }
+
+  step();
+}
+
 
 
