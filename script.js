@@ -1622,60 +1622,82 @@ function initCoverPhotoSparks() {
 }
 
 /* ==========================================================================
-   21. TYPEWRITER ANIMATION ENGINE (ANIMASI MENGETIK DI SETIAP BAGIAN KATA-KATA)
+   21. TYPEWRITER ANIMATION ENGINE (KHUSUS 3 BAGIAN YANG DITENTUKAN)
    ========================================================================== */
 function initTypewriterEffect() {
-  const targetSelectors = [
-    '.guest-salutation',
-    '.guest-sub',
-    '.greeting-paragraph',
-    '.greeting-ayah',
-    '.couple-parentage',
-    '.khitan-doa-quote',
-    '.timeline-story-desc',
-    '.video-event-intro',
-    '.section-desc',
-    '.thankyou-paragraph-1',
-    '.thankyou-paragraph-2',
-    '.closing-boys-mention',
-    '.typewrite-text'
-  ];
+  /**
+   * Hanya diaktifkan khusus pada 3 bagian kata-kata sesuai permintaan pengguna:
+   * 1. Blok Pembuka: Sambutan formal & Ayat QS. Ar-Rum: 21 (Screenshot 3)
+   * 2. Doa Syukuran Khitanan Putra Kami (Screenshot 2)
+   * 3. Blok Penutup: Ucapan Terima Kasih (Screenshot 1)
+   */
+  function observeBlock(triggerEl, items) {
+    if (!triggerEl) return;
 
-  const elements = document.querySelectorAll(targetSelectors.join(', '));
-
-  // Simpan HTML asli setiap elemen
-  elements.forEach((el) => {
-    if (el.hasAttribute('data-typewriter-orig')) return;
-    const originalHtml = el.innerHTML.trim();
-    el.setAttribute('data-typewriter-orig', originalHtml);
-  });
-
-  // IntersectionObserver: Mengetik saat elemen masuk ke layar
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        if (!el.hasAttribute('data-typed')) {
-          el.setAttribute('data-typed', 'true');
-          const fullHtml = el.getAttribute('data-typewriter-orig');
-          if (fullHtml) {
-            // Atur kecepatan mengetik berdasarkan panjang teks
-            const textLen = el.textContent.length;
-            const speed = textLen > 180 ? 12 : (textLen > 80 ? 18 : 26);
-            typeHtmlElement(el, fullHtml, speed);
-          }
-          obs.unobserve(el);
-        }
+    // Simpan teks asli semua item
+    items.forEach(el => {
+      if (el && !el.hasAttribute('data-typewriter-orig')) {
+        el.setAttribute('data-typewriter-orig', el.innerHTML.trim());
+        el.style.minHeight = el.offsetHeight > 0 ? `${el.offsetHeight}px` : 'auto';
+        el.innerHTML = '';
       }
     });
-  }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -40px 0px'
-  });
 
-  elements.forEach((el) => {
-    observer.observe(el);
-  });
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !triggerEl.hasAttribute('data-typed')) {
+          triggerEl.setAttribute('data-typed', 'true');
+          obs.unobserve(triggerEl);
+
+          // Jalankan animasi pengetikan berurutan (sequential)
+          let currentIndex = 0;
+          function playNext() {
+            if (currentIndex < items.length) {
+              const el = items[currentIndex];
+              currentIndex++;
+              if (el) {
+                const fullHtml = el.getAttribute('data-typewriter-orig');
+                const textLen = el.textContent ? el.textContent.length : 100;
+                const speed = textLen > 180 ? 12 : (textLen > 80 ? 17 : 24);
+                typeHtmlElement(el, fullHtml, speed, playNext);
+              } else {
+                playNext();
+              }
+            }
+          }
+
+          playNext();
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    observer.observe(triggerEl);
+  }
+
+  // 1. Blok Sambutan Formal & QS. Ar-Rum 21 (Screenshot 3)
+  const greetingBlock = document.querySelector('.greeting-text-block');
+  const greetingP1 = document.querySelector('.greeting-paragraph');
+  const greetingP2 = document.querySelector('.greeting-ayah');
+  if (greetingBlock && (greetingP1 || greetingP2)) {
+    observeBlock(greetingBlock, [greetingP1, greetingP2].filter(Boolean));
+  }
+
+  // 2. Doa Syukuran Khitanan Putra Kami (Screenshot 2)
+  const khitanQuote = document.querySelector('.khitan-doa-quote');
+  if (khitanQuote) {
+    observeBlock(khitanQuote, [khitanQuote]);
+  }
+
+  // 3. Blok Ucapan Terima Kasih Penutup (Screenshot 1)
+  const thankyouBlock = document.querySelector('.video-thankyou-block');
+  const thankyouP1 = document.querySelector('.thankyou-paragraph-1');
+  const thankyouP2 = document.querySelector('.thankyou-paragraph-2');
+  if (thankyouBlock && (thankyouP1 || thankyouP2)) {
+    observeBlock(thankyouBlock, [thankyouP1, thankyouP2].filter(Boolean));
+  }
 }
 
 /**
@@ -1731,8 +1753,9 @@ function typeHtmlElement(el, fullHtml, speed = 20, callback) {
       el.appendChild(cursor);
       setTimeout(() => {
         cursor.remove();
+        el.style.minHeight = '';
         if (typeof callback === 'function') callback();
-      }, 900);
+      }, 700);
     }
   }
 
