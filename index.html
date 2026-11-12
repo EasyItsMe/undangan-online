@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Undangan Pernikahan & Khitanan - Ami & Azis</title>
-  <meta name="description" content="Undangan Pernikahan Siti Ami & Abdul Azis serta Khitanan Andiks Satria & Raditya Panca. Minggu Malam Senin, 06 Desember 2026 - Kp. Buah Gede, Sentul, Kragilan, Serang - Banten.">
+  <title>The Wedding of Siti Ami & Abdul Azis | Walimatul 'Urs & Walimatul Khitan</title>
+  <meta name="description" content="Undangan Pernikahan Mewah Siti Ami & Abdul Azis serta Walimatul Khitan Andiks Satria & Raditya Panca. Minggu Malam Senin, 06 Desember 2026 - Kp. Buah Gede, Sentul, Kragilan, Serang - Banten.">
   
   <!-- Open Graph / Meta Sosial -->
-  <meta property="og:title" content="The Wedding of Siti Ami & Abdul Azis (Serta Khitanan)">
-  <meta property="og:description" content="Minggu Malam Senin, 06 Desember 2026 - Kp. Buah Gede, Ds. Sentul, Kec. Kragilan, Kab. Serang - Banten">
+  <meta property="og:title" content="The Royal Wedding of Siti Ami & Abdul Azis">
+  <meta property="og:description" content="Minggu Malam Senin, 06 Desember 2026 - Walimatul 'Urs & Walimatul Khitan">
   <meta property="og:type" content="website">
 
   <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -32,7 +32,6 @@
 
   <!-- Audio Background -->
   <audio id="wedding-audio" loop preload="auto">
-    <!-- Romantic instrumental royalty-free track -->
     <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_c848f09432.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
     <source src="https://assets.mixkit.co/music/preview/mixkit-wedding-waltz-piano-solo-713.mp3" type="audio/mpeg">
   </audio>
@@ -45,11 +44,20 @@
     <span class="music-note-bubble"><i class="fa-solid fa-music"></i></span>
   </button>
 
-  <!-- Floating WA Invitation Generator Button -->
-  <button id="open-share-modal-btn" class="share-floating-btn" aria-label="Generator Undangan WhatsApp" title="Buat Link WhatsApp untuk Tamu">
-    <i class="fa-brands fa-whatsapp"></i>
-    <span class="share-btn-label">Undang Tamu</span>
-  </button>
+  <!-- Floating Action Buttons Group -->
+  <div class="floating-actions-group">
+    <!-- Virtual Tabur Bunga Restu -->
+    <button id="flower-shower-btn" class="flower-floating-btn pulse-glow" aria-label="Tabur Bunga Restu" title="Kirim Tabur Bunga & Doa Restu">
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+      <span class="action-btn-label">Tabur Bunga</span>
+    </button>
+
+    <!-- Floating WA Invitation Generator Button -->
+    <button id="open-share-modal-btn" class="share-floating-btn" aria-label="Generator Undangan WhatsApp" title="Buat Link WhatsApp untuk Tamu">
+      <i class="fa-brands fa-whatsapp"></i>
+      <span class="action-btn-label">Undang Tamu</span>
+    </button>
+  </div>
 
   <!-- Floating Bottom Navigation Bar (Active after opening) -->
   <nav id="bottom-nav" class="bottom-nav">
@@ -61,49 +69,82 @@
       <i class="fa-solid fa-heart"></i>
       <span>Mempelai</span>
     </a>
-    <a href="#events" class="nav-item" title="Acara">
+    <a href="#events" class="nav-item" title="Acara & Rundown">
       <i class="fa-solid fa-calendar-check"></i>
       <span>Acara</span>
     </a>
     <a href="#family" class="nav-item" title="Keluarga & Turut Mengundang">
-      <i class="fa-solid fa-users"></i>
+      <i class="fa-solid fa-crown"></i>
       <span>Keluarga</span>
     </a>
     <a href="#wishes" class="nav-item" title="Ucapan & RSVP">
       <i class="fa-solid fa-comments"></i>
       <span>RSVP</span>
     </a>
-    <a href="#gift" class="nav-item" title="Kado">
+    <a href="#gift" class="nav-item" title="Kado & Amplop">
       <i class="fa-solid fa-gift"></i>
       <span>Kado</span>
     </a>
   </nav>
 
-  <!-- ==================== COVER OVERLAY (GATE) ==================== -->
+  <!-- ==================== COVER OVERLAY (GATE WITH WAX SEAL) ==================== -->
   <div id="cover-overlay" class="cover-overlay">
     <div class="cover-bg"></div>
+    <div class="luxury-vignette"></div>
+    
+    <!-- Ornate Golden Corners -->
+    <div class="corner-filigree top-left"></div>
+    <div class="corner-filigree top-right"></div>
+    <div class="corner-filigree bottom-left"></div>
+    <div class="corner-filigree bottom-right"></div>
+
     <div class="cover-decorative-frame"></div>
     
     <div class="cover-content">
-      <div class="cover-badge-top">
-        <span>WALIMATUL 'URS & WALIMATUL KHITAN</span>
+      <!-- Royal Crest Badge -->
+      <div class="royal-crest-mini">
+        <i class="fa-solid fa-crown gold-crown"></i>
+        <span>WALIMATUL 'URS &amp; WALIMATUL KHITAN</span>
       </div>
-      <h1 class="cover-title">Ami & Azis</h1>
-      <p class="cover-subtitle-khitan"><i class="fa-solid fa-child"></i> Serta Khitanan: <strong>Andiks Satria & Raditya Panca</strong></p>
+
+      <div class="cover-monogram-top">A &amp; A</div>
+
+      <h1 class="cover-title gold-shimmer-text">Ami &amp; Azis</h1>
+      
+      <div class="cover-khitan-pill">
+        <i class="fa-solid fa-star-and-crescent"></i> Serta Khitanan: <strong>Andiks Satria &amp; Raditya Panca</strong>
+      </div>
+      
       <p class="cover-date"><i class="fa-regular fa-calendar-days"></i> Minggu Malam Senin, 06 Desember 2026</p>
       
-      <div class="guest-card">
+      <div class="guest-card luxury-glass-card">
+        <div class="card-ornament-line"></div>
         <p class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
-        <h3 id="guest-name" class="guest-name">Tamu Undangan</h3>
+        <h3 id="guest-name" class="guest-name gold-foil-name">Tamu Undangan</h3>
         <p class="guest-note">Mohon maaf apabila ada kesalahan penulisan nama/gelar</p>
       </div>
 
-      <button id="open-invitation-btn" class="btn btn-primary pulse-btn">
-        <i class="fa-solid fa-envelope-open-text"></i> Buka Undangan
-      </button>
+      <!-- Royal Wax Seal Open Button -->
+      <div class="wax-seal-container">
+        <div class="wax-ribbon"></div>
+        <button id="open-invitation-btn" class="wax-seal-button" aria-label="Buka Undangan Resmi">
+          <div class="wax-outer-ring">
+            <div class="wax-inner-core">
+              <span class="wax-text-arc">WALIMATUL 'URS • SITI AMI &amp; ABDUL AZIS •</span>
+              <div class="wax-center-monogram">
+                <span class="monogram-text">A&amp;A</span>
+                <i class="fa-solid fa-envelope-open-text seal-icon"></i>
+              </div>
+            </div>
+          </div>
+        </button>
+        <div class="wax-instruction">
+          <i class="fa-solid fa-arrow-pointer"></i> Ketuk Segel Emas untuk Membuka Undangan
+        </div>
+      </div>
     </div>
     
-    <!-- Floating Petals Canvas -->
+    <!-- Floating Dual Petals & Golden Stardust Canvas -->
     <canvas id="petals-canvas" class="petals-canvas"></canvas>
   </div>
 
@@ -114,30 +155,46 @@
     <section id="hero" class="hero-section">
       <div class="hero-backdrop"></div>
       <div class="hero-overlay-gradient"></div>
+      <div class="hero-ornament-border"></div>
       
       <div class="container hero-container" data-aos="fade-up">
-        <div class="hero-header-badge">
-          <span>Walimatul 'Urs &amp; Walimatul Khitan</span>
-        </div>
-        <span class="script-subtitle">The Wedding of</span>
-        <h1 class="hero-names">Siti Ami &amp; Abdul Azis</h1>
-        <p class="hero-khitan-mention">
-          <i class="fa-solid fa-star-and-crescent"></i> Serta Khitanan Putra Kami:<br>
-          <strong>Andiks Satria &amp; Raditya Panca</strong>
-        </p>
         
-        <div class="hero-date-badge">
-          <span>Minggu Malam Senin</span>
-          <span class="hero-date-number">06</span>
-          <span>Desember 2026</span>
+        <!-- Royal Wreath Monogram -->
+        <div class="royal-wreath-monogram" data-aos="zoom-in">
+          <div class="wreath-circle">
+            <i class="fa-solid fa-crown wreath-crown"></i>
+            <span class="wreath-letters">A&amp;A</span>
+          </div>
         </div>
-        <div class="hero-hijri-tag">
-          <i class="fa-regular fa-moon"></i> 26 Jumadil Akhir 1448 H
+
+        <div class="hero-header-badge">
+          <span>The Royal Wedding &amp; Circumcision</span>
+        </div>
+
+        <span class="script-subtitle">The Wedding of</span>
+        <h1 class="hero-names gold-shimmer-text">Siti Ami &amp; Abdul Azis</h1>
+        
+        <div class="hero-khitan-highlight" data-aos="fade-up" data-aos-delay="100">
+          <div class="khitan-crown-tag"><i class="fa-solid fa-star-and-crescent"></i> Walimatul Khitan Putra Tercinta</div>
+          <p class="khitan-boys"><strong>Andiks Satria</strong> &amp; <strong>Raditya Panca</strong></p>
+        </div>
+        
+        <div class="hero-date-box" data-aos="zoom-in" data-aos-delay="150">
+          <div class="hero-date-badge">
+            <span class="date-day">Minggu Malam Senin</span>
+            <span class="hero-date-number">06</span>
+            <span class="date-month">Desember 2026</span>
+          </div>
+          <div class="hero-hijri-tag">
+            <i class="fa-regular fa-moon"></i> 26 Jumadil Akhir 1448 H
+          </div>
         </div>
 
         <!-- Countdown Timer -->
-        <div class="countdown-wrap" data-aos="zoom-in" data-aos-delay="200">
-          <div class="countdown-title">Menghitung Hari Bahagia:</div>
+        <div class="countdown-wrap luxury-glass-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="countdown-title">
+            <i class="fa-solid fa-hourglass-half"></i> Menghitung Hari Menuju Hari Bahagia:
+          </div>
           <div class="countdown-boxes">
             <div class="countdown-box">
               <span id="days" class="num">00</span>
@@ -170,17 +227,25 @@
     <!-- AR-RUM / QUOTE SECTION -->
     <section class="section quote-section text-center">
       <div class="container" data-aos="fade-up">
-        <div class="bismillah-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-        <p class="quote-intro">
-          Assalamu’alaikum Warahmatullahi Wabarakatuh
-        </p>
-        <p class="quote-text">
-          "Dengan memohon Rahmat dan Ridho Allah SWT. Kami bermaksud menyelenggarakan Resepsi Pernikahan dan Khitanan Putra kami, yang Insya Allah akan dilaksanakan pada hari yang berbahagia."
-        </p>
-        <p class="quote-subtext">
-          "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
-        </p>
-        <span class="quote-source">— QS. Ar-Rum: 21 —</span>
+        <div class="quote-card-luxury">
+          <div class="bismillah-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+          <p class="quote-intro">
+            Assalamu’alaikum Warahmatullahi Wabarakatuh
+          </p>
+          <div class="royal-quote-frame">
+            <i class="fa-solid fa-quote-left quote-mark left"></i>
+            <p class="quote-text">
+              "Dengan memohon Rahmat dan Ridho Allah SWT. Kami bermaksud menyelenggarakan Resepsi Pernikahan dan Khitanan Putra kami, yang Insya Allah akan dilaksanakan pada hari yang penuh berkah."
+            </p>
+            <p class="quote-subtext">
+              "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir."
+            </p>
+            <i class="fa-solid fa-quote-right quote-mark right"></i>
+          </div>
+          <div class="quote-source-wrap">
+            <span class="quote-source">— QS. Ar-Rum: 21 —</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -189,59 +254,77 @@
       <div class="container">
         <div class="section-header text-center" data-aos="fade-up">
           <span class="section-subtitle">Mempelai &amp; Khitanan</span>
-          <h2 class="section-title">Yang Berbahagia</h2>
-          <div class="decorative-line"><span>❧</span></div>
+          <h2 class="section-title gold-shimmer-text">Yang Berbahagia</h2>
+          <div class="decorative-line"><span>❧ 👑 ❧</span></div>
           <p class="section-desc">Dengan memohon ridho dan keberkahan Allah SWT, perkenankan kami memperkenalkan pasangan mempelai dan putra kami yang dikhitan:</p>
         </div>
 
         <!-- KEDUA MEMPELAI -->
         <div class="couple-cards-grid">
           <!-- MEMPELAI WANITA -->
-          <div class="couple-card" data-aos="fade-right" data-aos-duration="1000">
+          <div class="couple-card luxury-card" data-aos="fade-right" data-aos-duration="1000">
+            <div class="corner-filigree top-left"></div>
+            <div class="corner-filigree bottom-right"></div>
+            
             <div class="couple-photo-wrapper">
+              <div class="photo-glow-ring"></div>
               <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop" alt="Siti Ami" class="couple-photo">
             </div>
-            <span class="bride-badge">Mempelai Wanita</span>
+            
+            <span class="bride-badge"><i class="fa-solid fa-gem"></i> Mempelai Wanita</span>
             <h3 class="couple-name">Siti Ami</h3>
+            <div class="couple-divider-ornament"><span>❧</span></div>
             <p class="couple-parents">
-              Putri Kedua dari:<br>
+              Putri Kedua dari Pasangan:<br>
               <strong>Bapak Sukmi</strong><br>&amp; <strong>Ibu Eli</strong>
             </p>
           </div>
 
           <!-- AMPERSAND DIVIDER -->
           <div class="couple-ampersand" data-aos="zoom-in">
-            <span>&amp;</span>
+            <div class="ampersand-circle">
+              <span>&amp;</span>
+            </div>
           </div>
 
           <!-- MEMPELAI PRIA -->
-          <div class="couple-card" data-aos="fade-left" data-aos-duration="1000">
+          <div class="couple-card luxury-card" data-aos="fade-left" data-aos-duration="1000">
+            <div class="corner-filigree top-right"></div>
+            <div class="corner-filigree bottom-left"></div>
+
             <div class="couple-photo-wrapper">
+              <div class="photo-glow-ring"></div>
               <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" alt="Abdul Azis" class="couple-photo">
             </div>
-            <span class="groom-badge">Mempelai Pria</span>
+            
+            <span class="groom-badge"><i class="fa-solid fa-crown"></i> Mempelai Pria</span>
             <h3 class="couple-name">Abdul Azis</h3>
+            <div class="couple-divider-ornament"><span>❧</span></div>
             <p class="couple-parents">
-              Putra Kedua dari:<br>
+              Putra Kedua dari Pasangan:<br>
               <strong>Bapak Sarip</strong><br>&amp; <strong>Ibu Ruminah</strong>
             </p>
           </div>
         </div>
 
         <!-- SPECIAL KHITANAN CARD -->
-        <div class="khitanan-banner-box" data-aos="fade-up" data-aos-delay="200">
+        <div class="khitanan-banner-box luxury-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="corner-filigree top-left"></div>
+          <div class="corner-filigree top-right"></div>
+          
           <div class="khitanan-header">
-            <div class="khitanan-icon-wrap">
+            <div class="khitanan-icon-wrap pulse-glow">
               <i class="fa-solid fa-star-and-crescent"></i>
             </div>
             <span class="khitanan-tag">Walimatul Khitan</span>
-            <h3 class="khitanan-title">Khitanan Putra Kami</h3>
+            <h3 class="khitanan-title gold-shimmer-text">Syukuran Khitanan Putra Tercinta</h3>
+            <div class="decorative-line"><span>❧ ✧ ❧</span></div>
           </div>
           
           <div class="khitanan-names-grid">
-            <div class="khitan-boy-card">
+            <div class="khitan-boy-card" data-aos="zoom-in" data-aos-delay="250">
               <div class="boy-avatar">
-                <i class="fa-solid fa-child"></i>
+                <i class="fa-solid fa-child-reaching"></i>
               </div>
               <h4 class="boy-name">Andiks Satria</h4>
               <p class="boy-desc">Putra Tercinta</p>
@@ -249,9 +332,9 @@
             
             <div class="khitan-ampersand">&amp;</div>
 
-            <div class="khitan-boy-card">
+            <div class="khitan-boy-card" data-aos="zoom-in" data-aos-delay="300">
               <div class="boy-avatar">
-                <i class="fa-solid fa-child"></i>
+                <i class="fa-solid fa-child-reaching"></i>
               </div>
               <h4 class="boy-name">Raditya Panca</h4>
               <p class="boy-desc">Putra Tercinta</p>
@@ -260,7 +343,7 @@
 
           <div class="khitanan-prayer">
             <i class="fa-solid fa-quote-left"></i>
-            <p>"Semoga ananda Andiks Satria dan Raditya Panca menjadi putra yang sholeh, cerdas, berbakti kepada orang tua, agama, nusa, dan bangsa, serta senantiasa dilimpahi kesehatan dan keberkahan. Aamiin ya Rabbal 'Alamin."</p>
+            <p>"Semoga ananda Andiks Satria dan Raditya Panca menjadi putra yang sholeh, cerdas, berbakti kepada kedua orang tua, agama, nusa, dan bangsa, serta senantiasa dilimpahi kesehatan dan keselamatan lahir &amp; batin. Aamiin ya Rabbal 'Alamin."</p>
             <i class="fa-solid fa-quote-right"></i>
           </div>
         </div>
@@ -273,21 +356,23 @@
       <div class="container">
         <div class="section-header text-center" data-aos="fade-up">
           <span class="section-subtitle">Waktu &amp; Tempat</span>
-          <h2 class="section-title">Agenda Acara</h2>
-          <div class="decorative-line"><span>❧</span></div>
+          <h2 class="section-title gold-shimmer-text">Agenda &amp; Rangkaian Acara</h2>
+          <div class="decorative-line"><span>❧ 📅 ❧</span></div>
           <p class="section-desc">Insya Allah rangkaian acara pernikahan dan syukuran khitanan akan dilaksanakan pada:</p>
         </div>
 
         <div class="events-grid">
           <!-- CARD AKAD NIKAH -->
-          <div class="event-card" data-aos="fade-up" data-aos-delay="100">
-            <div class="event-icon">
+          <div class="event-card luxury-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="event-icon pulse-glow">
               <i class="fa-solid fa-ring"></i>
             </div>
+            <div class="badge-subevent">Prosesi Ijab Qabul</div>
             <h3 class="event-title">Akad Nikah</h3>
+            
             <div class="event-datetime">
               <div class="date-item">
-                <i class="fa-regular fa-calendar"></i>
+                <i class="fa-regular fa-calendar-check"></i>
                 <span>Minggu Malam Senin, 06 Desember 2026</span>
               </div>
               <div class="hijri-item">
@@ -299,10 +384,12 @@
                 <span>Pukul : 08.00 WIB s/d 09.00 WIB</span>
               </div>
             </div>
+
             <div class="event-venue">
               <h4>Kediaman Mempelai Wanita</h4>
               <p>Kp. Buah Gede RT. 009 RW. 005 Ds. Sentul Kec. Kragilan Kab. Serang - Banten</p>
             </div>
+
             <div class="event-actions">
               <a href="https://www.google.com/maps/search/?api=1&query=Kp.+Buah+Gede+Sentul+Kragilan+Kabupaten+Serang+Banten" target="_blank" rel="noopener" class="btn btn-outline">
                 <i class="fa-solid fa-location-dot"></i> Buka Google Maps
@@ -314,15 +401,16 @@
           </div>
 
           <!-- CARD RESEPSI & KHITANAN -->
-          <div class="event-card highlight-card" data-aos="fade-up" data-aos-delay="200">
-            <div class="event-icon">
+          <div class="event-card highlight-card luxury-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="event-icon pulse-glow">
               <i class="fa-solid fa-champagne-glasses"></i>
             </div>
             <div class="badge-featured">Resepsi &amp; Khitanan</div>
             <h3 class="event-title">Resepsi Pernikahan</h3>
+            
             <div class="event-datetime">
               <div class="date-item">
-                <i class="fa-regular fa-calendar"></i>
+                <i class="fa-regular fa-calendar-check"></i>
                 <span>Minggu Malam Senin, 06 Desember 2026</span>
               </div>
               <div class="hijri-item">
@@ -334,10 +422,12 @@
                 <span>Pukul : 09.00 WIB s/d Selesai</span>
               </div>
             </div>
+
             <div class="event-venue">
               <h4>Kediaman Mempelai Wanita</h4>
               <p>Kp. Buah Gede RT. 009 RW. 005 Ds. Sentul Kec. Kragilan Kab. Serang - Banten</p>
             </div>
+
             <div class="event-actions">
               <a href="https://www.google.com/maps/search/?api=1&query=Kp.+Buah+Gede+Sentul+Kragilan+Kabupaten+Serang+Banten" target="_blank" rel="noopener" class="btn btn-primary">
                 <i class="fa-solid fa-location-dot"></i> Buka Google Maps
@@ -349,10 +439,96 @@
           </div>
         </div>
 
+        <!-- RUNDOWN ACARA (SUSUNAN ACARA KHIDMAT) -->
+        <div class="rundown-section-card luxury-card" data-aos="fade-up" data-aos-delay="250">
+          <div class="rundown-header text-center">
+            <i class="fa-solid fa-clipboard-list gold-icon"></i>
+            <h3 class="rundown-title">Susunan Rangkaian Acara</h3>
+            <p class="rundown-subtitle">Alur prosesi demi kelancaran dan kekhidmatan acara</p>
+          </div>
+
+          <div class="rundown-timeline">
+            <div class="rundown-step">
+              <div class="rundown-time">08.00 - 09.00 WIB</div>
+              <div class="rundown-marker"></div>
+              <div class="rundown-info">
+                <h4>Prosesi Akad Nikah</h4>
+                <p>Pembacaan ayat suci Al-Qur'an, khutbah nikah, ijab qabul, dan penyerahan mahar.</p>
+              </div>
+            </div>
+
+            <div class="rundown-step">
+              <div class="rundown-time">09.00 - 09.45 WIB</div>
+              <div class="rundown-marker"></div>
+              <div class="rundown-info">
+                <h4>Sungkeman &amp; Doa Restu</h4>
+                <p>Memohon doa restu kepada kedua orang tua dan sesepuh keluarga besar.</p>
+              </div>
+            </div>
+
+            <div class="rundown-step highlight-step">
+              <div class="rundown-time">09.45 - 11.00 WIB</div>
+              <div class="rundown-marker"></div>
+              <div class="rundown-info">
+                <h4>Syukuran Walimatul Khitan</h4>
+                <p>Doa bersama untuk ananda Andiks Satria &amp; Raditya Panca.</p>
+              </div>
+            </div>
+
+            <div class="rundown-step">
+              <div class="rundown-time">11.00 - Selesai</div>
+              <div class="rundown-marker"></div>
+              <div class="rundown-info">
+                <h4>Resepsi &amp; Ramah Tamah</h4>
+                <p>Ucapan selamat dari para tamu undangan, foto bersama, dan santap hidangan.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DRESS CODE / PANDUAN BUSANA -->
+        <div class="dresscode-card luxury-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="dresscode-header text-center">
+            <i class="fa-solid fa-shirt gold-icon"></i>
+            <h3 class="dresscode-title">Panduan Busana &amp; Nuansa Warna</h3>
+            <p class="dresscode-subtitle">Merupakan kebahagiaan bagi kami apabila tamu mengenakan nuansa berikut:</p>
+          </div>
+
+          <div class="color-palette-grid">
+            <div class="color-item">
+              <div class="color-circle" style="background: #d4af37;" title="Champagne Gold"></div>
+              <span>Champagne</span>
+            </div>
+            <div class="color-item">
+              <div class="color-circle" style="background: #5b7065;" title="Sage Green"></div>
+              <span>Sage Green</span>
+            </div>
+            <div class="color-item">
+              <div class="color-circle" style="background: #c98a8a;" title="Dusty Rose"></div>
+              <span>Dusty Rose</span>
+            </div>
+            <div class="color-item">
+              <div class="color-circle" style="background: #f4ece1; border: 1px solid #d4af37;" title="Warm Ivory"></div>
+              <span>Warm Ivory</span>
+            </div>
+          </div>
+
+          <div class="dresscode-etiquette">
+            <div class="etiquette-col">
+              <i class="fa-solid fa-mars"></i>
+              <strong>Pria:</strong> Batik Lengan Panjang / Kemeja Formal
+            </div>
+            <div class="etiquette-col">
+              <i class="fa-solid fa-venus"></i>
+              <strong>Wanita:</strong> Kebaya / Gamis / Dress Formal Santun
+            </div>
+          </div>
+        </div>
+
         <!-- Embedded Interactive Map Card -->
-        <div class="map-container-box" data-aos="zoom-in" data-aos-delay="300">
+        <div class="map-container-box luxury-card" data-aos="zoom-in" data-aos-delay="350">
           <div class="map-header">
-            <i class="fa-solid fa-map-location-dot"></i>
+            <i class="fa-solid fa-map-location-dot gold-icon"></i>
             <span>Peta Lokasi: Kp. Buah Gede, Ds. Sentul, Kec. Kragilan, Kab. Serang</span>
           </div>
           <div class="iframe-wrapper">
@@ -360,7 +536,7 @@
               title="Lokasi Acara Kp. Buah Gede Sentul Kragilan" 
               src="https://maps.google.com/maps?q=Sentul,+Kragilan,+Serang+Regency,+Banten&t=&z=14&ie=UTF8&iwloc=&output=embed" 
               width="100%" 
-              height="340" 
+              height="350" 
               style="border:0;" 
               allowfullscreen="" 
               loading="lazy" 
@@ -376,34 +552,34 @@
       <div class="container">
         <div class="section-header text-center" data-aos="fade-up">
           <span class="section-subtitle">Keluarga Besar</span>
-          <h2 class="section-title">Pengangkat Hajat &amp; Turut Mengundang</h2>
-          <div class="decorative-line"><span>❧</span></div>
+          <h2 class="section-title gold-shimmer-text">Pengangkat Hajat &amp; Turut Mengundang</h2>
+          <div class="decorative-line"><span>❧ 👑 ❧</span></div>
           <p class="section-desc">Rasa hormat dan terima kasih yang setinggi-tingginya kami haturkan kepada keluarga besar, tokoh masyarakat, serta segenap yang turut mengundang:</p>
         </div>
 
         <!-- Tabs Controller -->
         <div class="family-tabs" data-aos="fade-up">
           <button class="tab-btn active" onclick="switchFamilyTab('wanita')">
-            <i class="fa-solid fa-female"></i> Pihak Mempelai Wanita
+            <i class="fa-solid fa-female"></i> Pihak Mempelai Wanita (29 Tokoh &amp; Keluarga)
           </button>
           <button class="tab-btn" onclick="switchFamilyTab('pria')">
-            <i class="fa-solid fa-male"></i> Pihak Mempelai Pria
+            <i class="fa-solid fa-male"></i> Pihak Mempelai Pria (19 Tokoh &amp; Keluarga)
           </button>
         </div>
 
         <!-- TAB CONTENT: PIHAK MEMPELAI WANITA -->
         <div id="tab-wanita" class="family-tab-content active" data-aos="fade-up">
           <!-- Pengangkat Hajat Wanita -->
-          <div class="hajat-card">
+          <div class="hajat-card luxury-card">
             <div class="hajat-badge"><i class="fa-solid fa-crown"></i> Pengangkat Hajat Mempelai Wanita</div>
             <ul class="hajat-list">
-              <li><i class="fa-solid fa-check"></i> Keluarga Besar Bpk. Mukamad &amp; Ibu Mastinah (Almh)</li>
-              <li><i class="fa-solid fa-check"></i> Keluarga Besar Bpk. Karimun &amp; Ibu Saripah (Almh)</li>
+              <li><i class="fa-solid fa-circle-check"></i> Keluarga Besar Bpk. Mukamad &amp; Ibu Mastinah (Almh)</li>
+              <li><i class="fa-solid fa-circle-check"></i> Keluarga Besar Bpk. Karimun &amp; Ibu Saripah (Almh)</li>
             </ul>
           </div>
 
           <!-- Turut Mengundang Wanita -->
-          <div class="guest-honored-card">
+          <div class="guest-honored-card luxury-card">
             <h3 class="honored-title"><i class="fa-solid fa-user-tie"></i> Turut Mengundang (Mempelai Wanita)</h3>
             <div class="honored-grid">
               <div class="honored-item"><span>1.</span> <strong>Bpk. Supangat</strong> <small>(Kepala Desa Sentul)</small></div>
@@ -442,15 +618,15 @@
         <!-- TAB CONTENT: PIHAK MEMPELAI PRIA -->
         <div id="tab-pria" class="family-tab-content" data-aos="fade-up">
           <!-- Pengangkat Hajat Pria -->
-          <div class="hajat-card">
+          <div class="hajat-card luxury-card">
             <div class="hajat-badge"><i class="fa-solid fa-crown"></i> Pengangkat Hajat Mempelai Pria</div>
             <ul class="hajat-list">
-              <li><i class="fa-solid fa-check"></i> Bpk. Sarip Dan Ibu Ruminah</li>
+              <li><i class="fa-solid fa-circle-check"></i> Bpk. Sarip Dan Ibu Ruminah</li>
             </ul>
           </div>
 
           <!-- Turut Mengundang Pria -->
-          <div class="guest-honored-card">
+          <div class="guest-honored-card luxury-card">
             <h3 class="honored-title"><i class="fa-solid fa-user-tie"></i> Turut Mengundang (Mempelai Pria)</h3>
             <div class="honored-grid">
               <div class="honored-item"><span>1.</span> <strong>Bpk. Bukhari</strong> <small>(Kades Pematang)</small></div>
@@ -484,16 +660,16 @@
       <div class="container">
         <div class="section-header text-center" data-aos="fade-up">
           <span class="section-subtitle">Konfirmasi Kehadiran &amp; Doa Restu</span>
-          <h2 class="section-title">RSVP &amp; Buku Tamu</h2>
-          <div class="decorative-line"><span>❧</span></div>
+          <h2 class="section-title gold-shimmer-text">RSVP &amp; Buku Tamu</h2>
+          <div class="decorative-line"><span>❧ 💌 ❧</span></div>
           <p class="section-desc">Mohon konfirmasi kehadiran dan kirimkan doa restu untuk pernikahan dan khitanan putra kami:</p>
         </div>
 
         <div class="rsvp-wishes-wrapper">
           <!-- FORM RSVP & WISHES -->
-          <div class="card-form-container" data-aos="fade-right">
+          <div class="card-form-container luxury-card" data-aos="fade-right">
             <form id="rsvp-form" class="wedding-form">
-              <h3 class="form-title"><i class="fa-solid fa-pen-nib"></i> Isi Kehadiran &amp; Doa</h3>
+              <h3 class="form-title"><i class="fa-solid fa-pen-nib gold-icon"></i> Isi Kehadiran &amp; Doa</h3>
               
               <div class="form-group">
                 <label for="form-name">Nama Lengkap *</label>
@@ -537,18 +713,18 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-primary btn-block">
+              <button type="submit" class="btn btn-primary btn-block pulse-btn">
                 <i class="fa-solid fa-paper-plane"></i> Kirim Konfirmasi &amp; Doa
               </button>
             </form>
           </div>
 
           <!-- WISHES LIST DISPLAY -->
-          <div class="wishes-display-container" data-aos="fade-left">
+          <div class="wishes-display-container luxury-card" data-aos="fade-left">
             <div class="wishes-header">
               <div class="wishes-counter">
-                <i class="fa-solid fa-heart"></i>
-                <span id="wishes-count">0</span> Ucapan Doa
+                <i class="fa-solid fa-heart gold-icon"></i>
+                <span id="wishes-count">0</span> Doa Restu Masuk
               </div>
               <div class="attendance-summary" id="attendance-summary">
                 <span class="badge-hadir" id="count-hadir">0 Hadir</span>
@@ -568,60 +744,94 @@
       <div class="container text-center">
         <div class="section-header" data-aos="fade-up">
           <span class="section-subtitle">Tanda Kasih</span>
-          <h2 class="section-title">Amplop Digital &amp; Kado</h2>
-          <div class="decorative-line"><span>❧</span></div>
+          <h2 class="section-title gold-shimmer-text">Amplop Digital &amp; Kado</h2>
+          <div class="decorative-line"><span>❧ 🎁 ❧</span></div>
           <p class="section-desc max-600">
-            Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, kami menyediakan amplop digital berikut ini:
+            Doa restu Anda merupakan karunia terindah bagi kami. Namun jika memberi adalah ungkapan tanda kasih, kami menyediakan amplop digital berikut ini:
           </p>
         </div>
 
         <div class="gift-cards-grid">
-          <!-- CARD BANK BCA -->
-          <div class="gift-card" data-aos="flip-up" data-aos-delay="100">
-            <div class="bank-chip">
-              <i class="fa-solid fa-sim-card"></i>
-              <span class="bank-name">BANK BCA</span>
+          <!-- CARD BANK BCA METALLIC GOLD -->
+          <div class="gift-card bca-card luxury-card" data-aos="flip-up" data-aos-delay="100">
+            <div class="card-shine"></div>
+            <div class="bank-chip-row">
+              <div class="metallic-chip">
+                <div class="chip-line"></div>
+              </div>
+              <span class="bank-brand">BCA PLATINUM</span>
+              <i class="fa-solid fa-wifi card-contactless"></i>
             </div>
+            
             <div class="account-number-wrap">
               <span class="account-num" id="acc-bca">5829103829</span>
             </div>
-            <div class="account-holder">a.n. Siti Ami</div>
-            <button class="btn-copy" onclick="copyToClipboard('5829103829', 'Nomor rekening BCA berhasil disalin!')">
-              <i class="fa-regular fa-copy"></i> Salin Rekening
-            </button>
+            
+            <div class="account-holder">
+              <small>CARD HOLDER</small>
+              <strong>SITI AMI</strong>
+            </div>
+
+            <div class="card-buttons-row">
+              <button class="btn-copy" onclick="copyToClipboard('5829103829', 'Nomor rekening BCA Siti Ami berhasil disalin!')">
+                <i class="fa-regular fa-copy"></i> Salin Rekening
+              </button>
+              <a href="https://api.whatsapp.com/send?phone=6281234567890&text=Halo%20Ami%20%26%20Azis,%20saya%20sudah%20mengirimkan%20tanda%20kasih%20melalui%20rekening%20BCA.%20Semoga%20berkah%20dan%20bahagia%20selalu!" target="_blank" rel="noopener" class="btn-wa-confirm" title="Konfirmasi via WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i> Konfirmasi
+              </a>
+            </div>
           </div>
 
-          <!-- CARD BANK MANDIRI -->
-          <div class="gift-card mandiri" data-aos="flip-up" data-aos-delay="200">
-            <div class="bank-chip">
-              <i class="fa-solid fa-sim-card"></i>
-              <span class="bank-name">BANK BRI / MANDIRI</span>
+          <!-- CARD BANK MANDIRI / BRI BLACK GOLD -->
+          <div class="gift-card mandiri-card luxury-card" data-aos="flip-up" data-aos-delay="200">
+            <div class="card-shine"></div>
+            <div class="bank-chip-row">
+              <div class="metallic-chip">
+                <div class="chip-line"></div>
+              </div>
+              <span class="bank-brand">MANDIRI PRIORITY</span>
+              <i class="fa-solid fa-wifi card-contactless"></i>
             </div>
+            
             <div class="account-number-wrap">
               <span class="account-num" id="acc-mandiri">1370018294719</span>
             </div>
-            <div class="account-holder">a.n. Abdul Azis</div>
-            <button class="btn-copy" onclick="copyToClipboard('1370018294719', 'Nomor rekening berhasil disalin!')">
-              <i class="fa-regular fa-copy"></i> Salin Rekening
-            </button>
+            
+            <div class="account-holder">
+              <small>CARD HOLDER</small>
+              <strong>ABDUL AZIS</strong>
+            </div>
+
+            <div class="card-buttons-row">
+              <button class="btn-copy" onclick="copyToClipboard('1370018294719', 'Nomor rekening Mandiri Abdul Azis berhasil disalin!')">
+                <i class="fa-regular fa-copy"></i> Salin Rekening
+              </button>
+              <a href="https://api.whatsapp.com/send?phone=6281234567890&text=Halo%20Ami%20%26%20Azis,%20saya%20sudah%20mengirimkan%20tanda%20kasih%20melalui%20rekening%20Mandiri.%20Semoga%20berkah%20dan%20bahagia%20selalu!" target="_blank" rel="noopener" class="btn-wa-confirm" title="Konfirmasi via WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i> Konfirmasi
+              </a>
+            </div>
           </div>
 
           <!-- CARD QRIS / E-WALLET -->
-          <div class="gift-card qris" data-aos="flip-up" data-aos-delay="300">
-            <div class="bank-chip">
-              <i class="fa-solid fa-qrcode"></i>
-              <span class="bank-name">QRIS DOMPET DIGITAL</span>
+          <div class="gift-card qris-card luxury-card" data-aos="flip-up" data-aos-delay="300">
+            <div class="card-shine"></div>
+            <div class="bank-chip-row">
+              <i class="fa-solid fa-qrcode gold-icon"></i>
+              <span class="bank-brand">QRIS &amp; DOMPET DIGITAL</span>
             </div>
             <div class="qris-img-wrap">
               <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=Wedding-Ami-Azis-Digital-Gift" alt="QRIS Ami & Azis" class="qris-image">
             </div>
-            <div class="account-holder">Scan via GoPay, OVO, ShopeePay, Dana, &amp; Mobile Banking</div>
+            <div class="account-holder text-center">
+              <small>SCAN UNTUK TRANSFER DARI SEMUA APLIKASI BANK &amp; EWALLET</small>
+              <strong>GOPAY • OVO • DANA • SHOPEEPAY</strong>
+            </div>
           </div>
         </div>
 
         <!-- KIRIM KADO FISIK -->
-        <div class="physical-gift-card" data-aos="fade-up" data-aos-delay="350">
-          <div class="physical-gift-icon">
+        <div class="physical-gift-card luxury-card" data-aos="fade-up" data-aos-delay="350">
+          <div class="physical-gift-icon pulse-glow">
             <i class="fa-solid fa-box-open"></i>
           </div>
           <div class="physical-gift-info">
@@ -635,26 +845,27 @@
       </div>
     </section>
 
-    <!-- PROTOKOL KESEHATAN & DO'A PENUTUP -->
+    <!-- PROTOKOL & DO'A PENUTUP -->
     <section class="section closing-section text-center">
       <div class="container" data-aos="fade-up">
-        <div class="closing-card">
-          <div class="closing-icon">
+        <div class="closing-card luxury-card">
+          <div class="closing-crest-icon">
             <i class="fa-solid fa-dove"></i>
           </div>
-          <h2 class="closing-title">Ungkapan Terima Kasih</h2>
+          <h2 class="closing-title gold-shimmer-text">Ungkapan Terima Kasih</h2>
+          <div class="decorative-line"><span>❧ ✧ ❧</span></div>
           <p class="closing-text">
             Merupakan suatu kehormatan dan kebahagiaan bagi kami, apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan do'a restu. Atas kehadiran serta do'a restunya, kami ucapkan terima kasih yang sebesar-besarnya.
           </p>
           <div class="closing-salam">
-            <p>Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
+            <p class="salam-text">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
             <div class="closing-family-block">
               <p><strong>Keluarga Besar Bpk. Sukmi &amp; Ibu Eli</strong></p>
               <p><strong>Keluarga Besar Bpk. Sarip &amp; Ibu Ruminah</strong></p>
             </div>
-            <div class="closing-family">Kami yang berbahagia:</div>
-            <h3 class="closing-names">Ami &amp; Azis</h3>
-            <p class="closing-sub">Serta Andiks Satria &amp; Raditya Panca</p>
+            <div class="closing-family-title">Kami yang berbahagia:</div>
+            <h3 class="closing-names gold-shimmer-text">Ami &amp; Azis</h3>
+            <p class="closing-sub">Beserta Ananda: <strong>Andiks Satria &amp; Raditya Panca</strong></p>
           </div>
         </div>
       </div>
@@ -663,7 +874,9 @@
     <!-- FOOTER -->
     <footer class="footer">
       <div class="container text-center">
-        <p class="footer-copy">The Wedding of Siti Ami &amp; Abdul Azis &copy; 2026. Kp. Buah Gede, Sentul, Kragilan, Serang - Banten</p>
+        <div class="footer-monogram">A &amp; A</div>
+        <p class="footer-copy">The Royal Wedding of Siti Ami &amp; Abdul Azis &copy; 2026.</p>
+        <p class="footer-sub">Kp. Buah Gede, Ds. Sentul, Kec. Kragilan, Kab. Serang - Banten</p>
       </div>
     </footer>
 
@@ -677,15 +890,15 @@
 
   <!-- MODAL GENERATOR LINK UNDANGAN WHATSAPP -->
   <div id="share-modal" class="modal-overlay" onclick="closeShareModal(event)">
-    <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-card luxury-card" onclick="event.stopPropagation()">
       <button class="modal-close-btn" onclick="closeShareModal(event)" aria-label="Tutup">&times;</button>
       <div class="modal-header">
-        <div class="wa-icon-circle">
+        <div class="wa-icon-circle pulse-glow">
           <i class="fa-brands fa-whatsapp"></i>
         </div>
         <div>
           <h3 class="modal-title">Generator Undangan WhatsApp</h3>
-          <p class="modal-subtitle">Buat pesan personalisasi untuk keluarga &amp; sahabat</p>
+          <p class="modal-subtitle">Buat pesan personalisasi mewah untuk keluarga &amp; sahabat</p>
         </div>
       </div>
       
@@ -699,7 +912,7 @@
         </div>
 
         <div class="form-group">
-          <label for="share-preview-text">Pratinjau Format Pesan:</label>
+          <label for="share-preview-text">Pratinjau Format Pesan WhatsApp:</label>
           <textarea id="share-preview-text" readonly rows="8" class="share-textarea"></textarea>
         </div>
 

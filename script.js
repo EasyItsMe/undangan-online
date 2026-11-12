@@ -1,19 +1,19 @@
 /**
- * UNDANGAN PERNIKAHAN ONLINE - INTERACTIVE JAVASCRIPT
- * Rizky Pratama & Adinda Putri
+ * THE ROYAL WEDDING OF SITI AMI & ABDUL AZIS
+ * ULTRA-LUXURY INTERACTIVE JAVASCRIPT
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Inisialisasi Nama Tamu dari URL Parameter (?to=Nama+Tamu)
   initGuestName();
 
-  // 2. Inisialisasi Canvas Kelopak Bunga (Falling Petals)
+  // 2. Inisialisasi Canvas Dual Petals & Golden Stardust
   initPetalsEffect();
 
-  // 3. Countdown Timer Pernikahan
+  // 3. Countdown Timer Pernikahan & Khitanan (Target: 06 Des 2026)
   initCountdownTimer();
 
-  // 4. Inisialisasi Buku Tamu & RSVP (Local Storage + Mock Data)
+  // 4. Inisialisasi Buku Tamu & RSVP (Local Storage + Like/Aamiin)
   initGuestbook();
 
   // 5. Inisialisasi Scroll Spy untuk Bottom Nav
@@ -22,7 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. Inisialisasi Generator Undangan WhatsApp
   initShareModal();
 
-  // 7. Inisialisasi AOS (Animate on Scroll)
+  // 7. Inisialisasi Virtual Tabur Bunga Restu
+  initFlowerShower();
+
+  // 8. Inisialisasi AOS (Animate on Scroll)
   if (typeof AOS !== 'undefined') {
     AOS.init({
       duration: 800,
@@ -35,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   1. GUEST NAME EXTRACTION (?to=Bapak+Ahmad / ?guest=...)
+   1. GUEST NAME EXTRACTION (?to=Bapak+Supangat / ?guest=...)
    ========================================================================== */
 function initGuestName() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -52,7 +55,7 @@ function initGuestName() {
 }
 
 /* ==========================================================================
-   2. COVER GATE & AUDIO CONTROLLER (WITH WEB AUDIO FALLBACK)
+   2. COVER GATE WITH ROYAL WAX SEAL & AUDIO
    ========================================================================== */
 const coverOverlay = document.getElementById('cover-overlay');
 const openBtn = document.getElementById('open-invitation-btn');
@@ -66,6 +69,9 @@ let synthTimer = null;
 
 if (openBtn) {
   openBtn.addEventListener('click', () => {
+    // Bunyikan nada chimes mewah
+    playChimeSound();
+
     // Buka Kunci Layar
     document.body.classList.remove('locked');
     coverOverlay.classList.add('opened');
@@ -75,10 +81,10 @@ if (openBtn) {
       musicBtn.style.display = 'flex';
     }
 
-    // Mainkan Audio (Bypass Autoplay Policy karena ada user click)
+    // Mainkan Audio (Bypass Autoplay Policy)
     playAudio();
 
-    // Luncurkan Efek Confetti Bahagia
+    // Luncurkan Efek Confetti & Hujan Emas
     launchCelebrationConfetti();
 
     // Refresh AOS posisi elemen setelah cover terangkat
@@ -99,7 +105,6 @@ function playAudio() {
     stopSynthMelody();
   }).catch((err) => {
     console.warn("Audio MP3 blocked or failed, using romantic synth fallback:", err);
-    // Start Web Audio chime synthesis fallback
     startSynthMelody();
     isMusicPlaying = true;
     diskIcon.classList.add('spinning');
@@ -123,6 +128,35 @@ if (musicBtn) {
   });
 }
 
+// Suara Chime Elegan saat Buka Undangan & Tabur Bunga
+function playChimeSound() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    if (!audioCtx) audioCtx = new AudioContext();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    // Chord Emas Mewah (C6, E6, G6, C7)
+    const chimeNotes = [1046.50, 1318.51, 1567.98, 2093.00];
+    chimeNotes.forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.08);
+
+      gain.gain.setValueAtTime(0.06, audioCtx.currentTime + idx * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + idx * 0.08 + 1.2);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(audioCtx.currentTime + idx * 0.08);
+      osc.stop(audioCtx.currentTime + idx * 0.08 + 1.2);
+    });
+  } catch (e) {
+    // Ignore audio context errors
+  }
+}
+
 // Gentle ambient chime synthesizer fallback (works 100% offline)
 function startSynthMelody() {
   if (synthTimer) return;
@@ -131,7 +165,7 @@ function startSynthMelody() {
   if (!audioCtx) audioCtx = new AudioContext();
   if (audioCtx.state === 'suspended') audioCtx.resume();
 
-  // Romantic acoustic harp/piano scale (F major / D minor pentatonic: F, A, C, D, E)
+  // Romantic pentatonic harp: F4, A4, C5, D5, E5
   const notes = [349.23, 440.00, 523.25, 587.33, 659.25, 523.25, 440.00, 392.00];
   let noteIndex = 0;
 
@@ -142,7 +176,7 @@ function startSynthMelody() {
       const gain = audioCtx.createGain();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(notes[noteIndex % notes.length], audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.035, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
 
       osc.connect(gain);
@@ -168,36 +202,35 @@ function stopSynthMelody() {
    ========================================================================== */
 function launchCelebrationConfetti() {
   if (typeof confetti === 'function') {
-    // Semburan pertama
+    // Semburan kelopak emas
     confetti({
-      particleCount: 70,
-      spread: 70,
-      origin: { y: 0.7 },
-      colors: ['#c5a059', '#e5c57b', '#ffffff', '#e8f0eb']
+      particleCount: 80,
+      spread: 80,
+      origin: { y: 0.65 },
+      colors: ['#d4af37', '#f3e5b8', '#ffffff', '#e91e63']
     });
 
-    // Semburan kedua samping
     setTimeout(() => {
       confetti({
         particleCount: 50,
         angle: 60,
-        spread: 55,
+        spread: 60,
         origin: { x: 0 },
-        colors: ['#c5a059', '#9b783e', '#ffffff']
+        colors: ['#d4af37', '#aa7e2e', '#ffffff']
       });
       confetti({
         particleCount: 50,
         angle: 120,
-        spread: 55,
+        spread: 60,
         origin: { x: 1 },
-        colors: ['#c5a059', '#9b783e', '#ffffff']
+        colors: ['#d4af37', '#aa7e2e', '#ffffff']
       });
-    }, 250);
+    }, 280);
   }
 }
 
 /* ==========================================================================
-   4. FALLING PETALS CANVAS ANIMATION
+   4. DUAL ENGINE: FALLING PETALS + GOLDEN STARDUST EMBERS
    ========================================================================== */
 function initPetalsEffect() {
   const canvas = document.getElementById('petals-canvas');
@@ -213,8 +246,11 @@ function initPetalsEffect() {
   });
 
   const petals = [];
-  const TOTAL_PETALS = 24;
+  const sparkles = [];
+  const TOTAL_PETALS = 20;
+  const TOTAL_SPARKLES = 25;
 
+  // Class Petal: Kelopak bunga lembut jatuh ke bawah
   class Petal {
     constructor() {
       this.reset();
@@ -224,11 +260,11 @@ function initPetalsEffect() {
       this.y = Math.random() * -height;
       this.size = Math.random() * 8 + 6;
       this.speedY = Math.random() * 1.2 + 0.8;
-      this.speedX = Math.random() * 1 - 0.5;
+      this.speedX = Math.random() * 0.8 - 0.4;
       this.rotation = Math.random() * 360;
       this.rotationSpeed = Math.random() * 1.5 - 0.75;
-      this.opacity = Math.random() * 0.5 + 0.3;
-      this.color = Math.random() > 0.4 ? 'rgba(235, 205, 140,' : 'rgba(255, 230, 220,';
+      this.opacity = Math.random() * 0.45 + 0.3;
+      this.color = Math.random() > 0.4 ? 'rgba(235, 205, 140,' : 'rgba(255, 220, 220,';
     }
     update() {
       this.y += this.speedY;
@@ -245,8 +281,6 @@ function initPetalsEffect() {
       ctx.translate(this.x, this.y);
       ctx.rotate((this.rotation * Math.PI) / 180);
       ctx.fillStyle = this.color + this.opacity + ')';
-      
-      // Draw simple petal path
       ctx.beginPath();
       ctx.ellipse(0, 0, this.size, this.size * 0.5, 0, 0, Math.PI * 2);
       ctx.fill();
@@ -254,29 +288,56 @@ function initPetalsEffect() {
     }
   }
 
-  for (let i = 0; i < TOTAL_PETALS; i++) {
-    petals.push(new Petal());
+  // Class Sparkle: Kilauan debu emas naik perlahan ke atas
+  class Sparkle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * width;
+      this.y = height + Math.random() * 50;
+      this.radius = Math.random() * 2 + 1;
+      this.speedY = Math.random() * 0.8 + 0.3;
+      this.opacity = Math.random() * 0.7 + 0.2;
+      this.glow = Math.random() * 8 + 4;
+    }
+    update() {
+      this.y -= this.speedY;
+      this.opacity -= 0.0015;
+      if (this.y < -10 || this.opacity <= 0) {
+        this.reset();
+      }
+    }
+    draw() {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(247, 223, 165, ${this.opacity})`;
+      ctx.shadowColor = '#d4af37';
+      ctx.shadowBlur = this.glow;
+      ctx.fill();
+      ctx.restore();
+    }
   }
 
+  for (let i = 0; i < TOTAL_PETALS; i++) petals.push(new Petal());
+  for (let i = 0; i < TOTAL_SPARKLES; i++) sparkles.push(new Sparkle());
+
   function animate() {
-    // Berhenti jika cover sudah dibuka untuk menghemat performa CPU / baterai HP
     if (coverOverlay.classList.contains('opened')) return;
 
     ctx.clearRect(0, 0, width, height);
-    petals.forEach((p) => {
-      p.update();
-      p.draw();
-    });
+    petals.forEach(p => { p.update(); p.draw(); });
+    sparkles.forEach(s => { s.update(); s.draw(); });
     requestAnimationFrame(animate);
   }
   animate();
 }
 
 /* ==========================================================================
-   5. COUNTDOWN TIMER
+   5. COUNTDOWN TIMER (MINGGU MALAM SENIN, 06 DESEMBER 2026)
    ========================================================================== */
 function initCountdownTimer() {
-  // Target Tanggal Acara: Minggu Malam Senin, 06 Desember 2026, 08:00:00 WIB
   const weddingDate = new Date('2026-12-06T08:00:00+07:00').getTime();
 
   const daysEl = document.getElementById('days');
@@ -312,7 +373,7 @@ function initCountdownTimer() {
 }
 
 /* ==========================================================================
-   6. RSVP & GUESTBOOK (BUKU TAMU)
+   6. RSVP & GUESTBOOK WITH LIKE / "AAMIIN" REACTION
    ========================================================================== */
 const STORAGE_KEY = 'wedding_wishes_ami_azis';
 
@@ -323,7 +384,8 @@ const DEFAULT_WISHES = [
     status: 'Hadir',
     pax: '2',
     message: 'Barakallahu lakum wa baraka alaikum wa jama\'a bainakuma fii khoir. Selamat berbahagia untuk kedua mempelai Siti Ami & Abdul Azis, serta selamat atas khitanan ananda Andiks Satria & Raditya Panca. Semoga menjadi keluarga sakinah mawaddah warahmah dan putra yang sholeh berbakti.',
-    timestamp: '2 jam yang lalu'
+    timestamp: '2 jam yang lalu',
+    likes: 12
   },
   {
     id: 2,
@@ -331,7 +393,8 @@ const DEFAULT_WISHES = [
     status: 'Hadir',
     pax: '2',
     message: 'Selamat menempuh hidup baru untuk Ami dan Azis. Semoga senantiasa diberkahi rezeki dan kebahagiaan oleh Allah SWT. Serta doa terbaik untuk ananda Andiks & Raditya semoga tumbuh menjadi anak sholeh yang membanggakan keluarga dan bangsa.',
-    timestamp: '4 jam yang lalu'
+    timestamp: '4 jam yang lalu',
+    likes: 8
   },
   {
     id: 3,
@@ -339,7 +402,8 @@ const DEFAULT_WISHES = [
     status: 'Hadir',
     pax: '4',
     message: 'Alhamdulillah, selamat untuk Kang Azis & Neng Ami. Semoga lancar acaranya dari awal hingga selesai di Kp. Buah Gede. Aamiin ya Rabbal Alamin.',
-    timestamp: '1 hari yang lalu'
+    timestamp: '1 hari yang lalu',
+    likes: 6
   },
   {
     id: 4,
@@ -347,24 +411,24 @@ const DEFAULT_WISHES = [
     status: 'Hadir',
     pax: '3',
     message: 'Selamat atas pernikahan Ami & Azis serta khitanan Andiks Satria & Raditya Panca. Semoga Allah SWT melimpahkan berkah dan kebahagiaan berlimpah untuk seluruh keluarga besar.',
-    timestamp: '1 hari yang lalu'
+    timestamp: '1 hari yang lalu',
+    likes: 9
   }
 ];
 
 function initGuestbook() {
   const form = document.getElementById('rsvp-form');
-  const wishesList = document.getElementById('wishes-list');
   const countEl = document.getElementById('wishes-count');
   const countHadirEl = document.getElementById('count-hadir');
 
-  // Load existing data from localStorage or use defaults
   let wishes = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (!wishes || !Array.isArray(wishes) || wishes.length === 0) {
     wishes = DEFAULT_WISHES;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(wishes));
   }
 
-  function renderWishes() {
+  window.renderWishes = function() {
+    const wishesList = document.getElementById('wishes-list');
     if (!wishesList) return;
     wishesList.innerHTML = '';
 
@@ -388,22 +452,27 @@ function initGuestbook() {
       item.innerHTML = `
         <div class="wish-meta">
           <div class="wish-author">
-            <i class="fa-solid fa-circle-user" style="color: var(--primary);"></i>
+            <i class="fa-solid fa-circle-user" style="color: var(--gold-primary);"></i>
             <span>${escapeHTML(wish.name)}</span>
             <span class="wish-status-pill ${badgeClass}">${statusText}</span>
           </div>
           <span class="wish-time">${wish.timestamp || 'Baru saja'}</span>
         </div>
         <p class="wish-message">${escapeHTML(wish.message)}</p>
+        <div class="wish-footer">
+          <button class="btn-aamiin" onclick="likeWish(${wish.id})">
+            <i class="fa-solid fa-heart"></i> Aamiin <span id="like-count-${wish.id}">${wish.likes || 1}</span>
+          </button>
+        </div>
       `;
       wishesList.appendChild(item);
     });
 
     if (countEl) countEl.textContent = wishes.length;
     if (countHadirEl) countHadirEl.textContent = `${hadirCount} Hadir`;
-  }
+  };
 
-  renderWishes();
+  window.renderWishes();
 
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -425,19 +494,44 @@ function initGuestbook() {
         status,
         pax,
         message,
-        timestamp: 'Baru saja'
+        timestamp: 'Baru saja',
+        likes: 1
       };
 
       wishes.unshift(newWish);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(wishes));
 
-      renderWishes();
+      window.renderWishes();
       form.reset();
 
+      playChimeSound();
       showToast('Terima kasih atas doa restu & konfirmasi kehadiran Anda!');
     });
   }
 }
+
+// Like / "Aamiin" Reaction Handler
+window.likeWish = function(id) {
+  let wishes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_WISHES;
+  const wish = wishes.find(w => w.id === id);
+  if (wish) {
+    wish.likes = (wish.likes || 1) + 1;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(wishes));
+
+    const counter = document.getElementById(`like-count-${id}`);
+    if (counter) counter.textContent = wish.likes;
+
+    // Small celebratory confetti burst
+    if (typeof confetti === 'function') {
+      confetti({
+        particleCount: 15,
+        spread: 30,
+        origin: { y: 0.8 },
+        colors: ['#e91e63', '#d4af37']
+      });
+    }
+  }
+};
 
 function escapeHTML(str) {
   return str.replace(/[&<>'"]/g, 
@@ -452,7 +546,48 @@ function escapeHTML(str) {
 }
 
 /* ==========================================================================
-   7. SALIN KE CLIPBOARD & TOAST NOTIFICATION
+   7. VIRTUAL TABUR BUNGA RESTU (DIGITAL FLOWER SHOWER)
+   ========================================================================== */
+function initFlowerShower() {
+  const flowerBtn = document.getElementById('flower-shower-btn');
+  if (!flowerBtn) return;
+
+  flowerBtn.addEventListener('click', () => {
+    playChimeSound();
+
+    if (typeof confetti === 'function') {
+      // Semburan bunga & hati merah muda dan emas
+      confetti({
+        particleCount: 65,
+        spread: 100,
+        origin: { y: 0.6 },
+        colors: ['#e91e63', '#ff80ab', '#d4af37', '#ffffff', '#ffd54f']
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 40,
+          angle: 60,
+          spread: 60,
+          origin: { x: 0.1, y: 0.7 },
+          colors: ['#e91e63', '#d4af37']
+        });
+        confetti({
+          particleCount: 40,
+          angle: 120,
+          spread: 60,
+          origin: { x: 0.9, y: 0.7 },
+          colors: ['#e91e63', '#d4af37']
+        });
+      }, 250);
+    }
+
+    showToast('🌸 Doa restu & taburan bunga Anda telah terkirim! Terima kasih.');
+  });
+}
+
+/* ==========================================================================
+   8. SALIN KE CLIPBOARD & TOAST NOTIFICATION
    ========================================================================== */
 function copyToClipboard(text, message = 'Berhasil disalin ke papan klip!') {
   if (navigator.clipboard && window.isSecureContext) {
@@ -499,37 +634,13 @@ function showToast(message) {
 }
 
 /* ==========================================================================
-   8. GOOGLE CALENDAR LINK GENERATOR
+   9. GOOGLE CALENDAR LINK GENERATOR
    ========================================================================== */
 function addToGoogleCalendar(title, startDatetime, endDatetime, location, details) {
-  // Format startDatetime / endDatetime: YYYYMMDDTHHmmss
   const baseUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
   const url = `${baseUrl}&text=${encodeURIComponent(title)}&dates=${startDatetime}/${endDatetime}&location=${encodeURIComponent(location)}&details=${encodeURIComponent(details)}`;
   window.open(url, '_blank');
 }
-
-/* ==========================================================================
-   9. GALLERY LIGHTBOX
-   ========================================================================== */
-function openLightbox(imageUrl) {
-  const modal = document.getElementById('lightbox-modal');
-  const modalImg = document.getElementById('lightbox-img');
-  if (!modal || !modalImg) return;
-
-  modalImg.src = imageUrl;
-  modal.classList.add('active');
-}
-
-function closeLightbox() {
-  const modal = document.getElementById('lightbox-modal');
-  if (modal) modal.classList.remove('active');
-}
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeLightbox();
-  }
-});
 
 /* ==========================================================================
    10. BOTTOM NAVIGATION SCROLL SPY
@@ -582,7 +693,6 @@ function initShareModal() {
     });
   }
 
-  // Generate initial preview text
   updateSharePreview();
 }
 
@@ -611,7 +721,6 @@ function updateSharePreview() {
 
   const guestName = (guestInput && guestInput.value.trim()) ? guestInput.value.trim() : 'Bapak/Ibu/Sahabat';
   
-  // Create invitation URL with ?to= parameter
   const currentBase = window.location.href.split('?')[0];
   const inviteUrl = `${currentBase}?to=${encodeURIComponent(guestName)}`;
 
@@ -620,8 +729,8 @@ Bapak/Ibu/Saudara/i *${guestName}*
 
 Tanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk menghadiri acara resepsi pernikahan kami serta khitanan putra kami:
 
-*The Wedding of Siti Ami & Abdul Azis*
-*Serta Khitanan: Andiks Satria & Raditya Panca*
+*The Royal Wedding of Siti Ami & Abdul Azis*
+*Serta Walimatul Khitan: Andiks Satria & Raditya Panca*
 
 🗓 *Minggu Malam Senin, 06 Desember 2026* (26 Jumadil Akhir 1448 H)
 ⏰ Akad Nikah: 08.00 - 09.00 WIB
@@ -629,7 +738,7 @@ Tanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk menghadiri 
 📍 *Bertempat di Kediaman Mempelai Wanita:*
 Kp. Buah Gede RT. 009 RW. 005 Ds. Sentul Kec. Kragilan Kab. Serang - Banten
 
-Untuk info detail rangkaian acara, peta lokasi, dan konfirmasi kehadiran (RSVP), silakan kunjungi tautan undangan digital kami:
+Untuk info detail rangkaian acara, susunan rundown, panduan busana, peta lokasi, serta konfirmasi kehadiran (RSVP), silakan kunjungi tautan undangan digital resmi kami:
 ${inviteUrl}
 
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
