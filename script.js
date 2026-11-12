@@ -4,7 +4,10 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 0. Inisialisasi Preloader / Loading Screen
+  // 0. Inisialisasi Efek Percikan Api (Preloader & Cover Photo)
+  initFireSparksEffect();
+
+  // 0.1 Inisialisasi Preloader / Loading Screen
   initPreloader();
 
   // 1. Inisialisasi Nama Tamu dari URL Parameter (?to=Nama+Tamu)
@@ -98,6 +101,11 @@ if (openBtn) {
 
     // Mainkan Audio (Bypass Autoplay Policy)
     playAudio();
+
+    // Luncurkan Efek Percikan Api Perayaan
+    if (typeof window.burstCoverSparks === 'function') {
+      window.burstCoverSparks(75);
+    }
 
     // Luncurkan Efek Confetti & Hujan Emas
     launchCelebrationConfetti();
@@ -807,29 +815,37 @@ function initPreloader() {
   const progressBar = document.getElementById('preloader-progress-bar');
   if (!preloader) return;
 
-  let progress = 0;
+  const startTime = Date.now();
+  const MIN_DISPLAY_MS = 1400; // Minimal 1.4 detik agar animasi monogram & percikan api dinikmati
+  let progress = 10;
+
   const interval = setInterval(() => {
-    progress += Math.floor(Math.random() * 20) + 10;
-    if (progress > 90) progress = 90;
+    progress += Math.floor(Math.random() * 18) + 8;
+    if (progress > 95) progress = 95;
     if (progressBar) progressBar.style.width = progress + '%';
-  }, 100);
+  }, 120);
 
   const hidePreloader = () => {
-    clearInterval(interval);
-    if (progressBar) progressBar.style.width = '100%';
+    const elapsed = Date.now() - startTime;
+    const remaining = Math.max(0, MIN_DISPLAY_MS - elapsed);
+
     setTimeout(() => {
-      preloader.classList.add('fade-out');
+      clearInterval(interval);
+      if (progressBar) progressBar.style.width = '100%';
       setTimeout(() => {
-        preloader.style.display = 'none';
-      }, 600);
-    }, 300);
+        preloader.classList.add('fade-out');
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 800);
+      }, 350);
+    }, remaining);
   };
 
   if (document.readyState === 'complete') {
     hidePreloader();
   } else {
     window.addEventListener('load', hidePreloader);
-    setTimeout(hidePreloader, 2500); // Safety fallback timeout
+    setTimeout(hidePreloader, 3200); // Safety fallback timeout
   }
 }
 
@@ -1309,4 +1325,304 @@ function initRippleEffect() {
     });
   });
 }
+
+/* ==========================================================================
+   20. FIRE SPARKS & EMBERS ENGINE (EFEK PERCIKAN API MEWAH)
+   ========================================================================== */
+class FireSpark {
+  constructor(x, y, vx, vy, colorType = 'spark') {
+    this.x = x;
+    this.y = y;
+    this.prevX = x;
+    this.prevY = y;
+    this.vx = vx;
+    this.vy = vy;
+    this.colorType = colorType; // 'spark' or 'ember'
+    this.life = 0;
+    this.maxLife = colorType === 'ember' ? Math.random() * 40 + 35 : Math.random() * 26 + 14;
+    this.size = colorType === 'ember' ? Math.random() * 2.4 + 1.2 : Math.random() * 2.2 + 1.0;
+    this.gravity = colorType === 'ember' ? -0.12 : 0.09; // Embers float upward gently
+    this.friction = colorType === 'ember' ? 0.985 : 0.935;
+    this.alpha = 1;
+  }
+
+  update() {
+    this.prevX = this.x;
+    this.prevY = this.y;
+    this.vx *= this.friction;
+    this.vy *= this.friction;
+    this.vy += this.gravity;
+
+    if (this.colorType === 'ember') {
+      this.vx += (Math.random() - 0.5) * 0.25;
+    }
+
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life++;
+    this.alpha = Math.max(0, 1 - (this.life / this.maxLife));
+    return this.life < this.maxLife;
+  }
+
+  draw(ctx) {
+    const progress = this.life / this.maxLife;
+    ctx.save();
+
+    // Gradasi Warna Api: Putih Kilat Panas -> Emas Terang -> Oranye Berpijar -> Merah Bara
+    let r, g, b;
+    if (progress < 0.2) {
+      r = 255;
+      g = 255;
+      b = Math.floor(210 + (1 - progress * 5) * 45); // Putih kekuningan
+    } else if (progress < 0.55) {
+      r = 255;
+      g = Math.floor(190 - (progress - 0.2) * 200); // Emas ke oranye terang
+      b = 25;
+    } else {
+      r = 255;
+      g = Math.floor(75 * (1 - progress)); // Oranye ke merah bara
+      b = 0;
+    }
+
+    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${this.alpha})`;
+    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${this.alpha})`;
+    ctx.shadowBlur = this.colorType === 'ember' ? 8 : 6;
+    ctx.shadowColor = `rgba(255, 145, 0, ${this.alpha * 0.9})`;
+
+    if (this.colorType === 'spark') {
+      // Ekor garis percikan api dinamis (Streak)
+      ctx.lineWidth = Math.max(0.7, this.size * this.alpha);
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(this.prevX, this.prevY);
+      ctx.lineTo(this.x, this.y);
+      ctx.stroke();
+
+      // Titik pijar ujung percikan
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * 0.55, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      // Bara api lembut melayang
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * (1 - progress * 0.4), 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.restore();
+  }
+}
+
+function initFireSparksEffect() {
+  initPreloaderSparks();
+  initCoverPhotoSparks();
+}
+
+/**
+ * 20.1 PERCIKAN API PADA PRELOADER (CINCIN MONOGRAM A & A)
+ */
+function initPreloaderSparks() {
+  const canvas = document.getElementById('preloader-sparks-canvas');
+  const preloader = document.getElementById('preloader');
+  if (!canvas || !preloader) return;
+
+  const ctx = canvas.getContext('2d');
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  const sparks = [];
+  let animId = null;
+  let angle = 0;
+
+  function render() {
+    if (preloader.classList.contains('fade-out') && sparks.length === 0) {
+      if (animId) cancelAnimationFrame(animId);
+      return;
+    }
+
+    ctx.clearRect(0, 0, width, height);
+
+    // Titik pusat cincin preloader
+    const ringEl = document.querySelector('.preloader-spinner-ring');
+    let centerX = width / 2;
+    let centerY = height / 2 - 25;
+    let radius = 42;
+
+    if (ringEl) {
+      const rect = ringEl.getBoundingClientRect();
+      centerX = rect.left + rect.width / 2;
+      centerY = rect.top + rect.height / 2;
+      radius = rect.width / 2;
+    }
+
+    angle += 0.085;
+
+    // Semburkan percikan api dari cincin yang sedang berputar
+    if (!preloader.classList.contains('fade-out')) {
+      for (let i = 0; i < 3; i++) {
+        const emitAngle = angle + (Math.random() - 0.5) * 0.45;
+        const spawnX = centerX + Math.cos(emitAngle) * radius;
+        const spawnY = centerY + Math.sin(emitAngle) * radius;
+        const speed = Math.random() * 4.2 + 2.0;
+        const burstAngle = emitAngle + (Math.random() - 0.5) * 0.9;
+        const vx = Math.cos(burstAngle) * speed;
+        const vy = Math.sin(burstAngle) * speed - 0.6;
+        sparks.push(new FireSpark(spawnX, spawnY, vx, vy, 'spark'));
+      }
+
+      // Bara api melayang ke atas
+      if (Math.random() < 0.45) {
+        const emberAngle = Math.random() * Math.PI * 2;
+        const spawnX = centerX + Math.cos(emberAngle) * (radius * 0.9);
+        const spawnY = centerY + Math.sin(emberAngle) * (radius * 0.9);
+        sparks.push(new FireSpark(spawnX, spawnY, (Math.random() - 0.5) * 1.4, -(Math.random() * 2.0 + 0.8), 'ember'));
+      }
+    }
+
+    // Update & gambar semua partikel
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      if (sparks[i].update()) {
+        sparks[i].draw(ctx);
+      } else {
+        sparks.splice(i, 1);
+      }
+    }
+
+    animId = requestAnimationFrame(render);
+  }
+
+  animId = requestAnimationFrame(render);
+}
+
+/**
+ * 20.2 PERCIKAN API PADA FOTO UTAMA HALAMAN PERTAMA (COVER GOLDEN RING)
+ */
+let coverSparksEngine = null;
+
+function initCoverPhotoSparks() {
+  const canvas = document.getElementById('cover-sparks-canvas');
+  const ringWrapper = document.querySelector('.sparkling-ring-wrapper');
+  if (!canvas || !ringWrapper) return;
+
+  const ctx = canvas.getContext('2d');
+  const sparks = [];
+  let animId = null;
+  let angle = -Math.PI / 2; // Mulai dari arah jam 12
+
+  function resize() {
+    const rect = ringWrapper.getBoundingClientRect();
+    const padding = 50;
+    canvas.width = rect.width + padding * 2;
+    canvas.height = rect.height + padding * 2;
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  coverSparksEngine = {
+    burst: function(count = 60) {
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = (canvas.width - 100) / 2 * 0.94;
+
+      for (let i = 0; i < count; i++) {
+        const theta = Math.random() * Math.PI * 2;
+        const spawnX = centerX + Math.cos(theta) * radius;
+        const spawnY = centerY + Math.sin(theta) * radius;
+        const speed = Math.random() * 6.5 + 2.5;
+        const vx = Math.cos(theta) * speed + (Math.random() - 0.5) * 1.5;
+        const vy = Math.sin(theta) * speed - 1.2;
+        sparks.push(new FireSpark(spawnX, spawnY, vx, vy, Math.random() > 0.35 ? 'spark' : 'ember'));
+      }
+    }
+  };
+
+  window.burstCoverSparks = coverSparksEngine.burst;
+
+  // Letusan percikan awal saat foto pertama dan cincin selesai memuat
+  setTimeout(() => {
+    coverSparksEngine.burst(35);
+  }, 450);
+
+  function render() {
+    const cover = document.getElementById('cover-overlay');
+    // Jika cover sudah dibuka dan semua percikan selesai, hentikan loop untuk hemat daya
+    if (cover && cover.classList.contains('opened') && sparks.length === 0) {
+      if (animId) cancelAnimationFrame(animId);
+      return;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = (canvas.width - 100) / 2 * 0.94;
+
+    // Perputaran kepala komet mengelilingi foto
+    angle += 0.038;
+
+    if (!cover || !cover.classList.contains('opened')) {
+      // 1. Semburkan percikan api terus-menerus dari kepala komet yang memutari foto
+      for (let i = 0; i < 4; i++) {
+        const jitterAngle = angle + (Math.random() - 0.5) * 0.22;
+        const spawnX = centerX + Math.cos(jitterAngle) * radius;
+        const spawnY = centerY + Math.sin(jitterAngle) * radius;
+
+        // Semprot ke arah berlawanan putaran dan memercik keluar
+        const tangent = jitterAngle + Math.PI / 2;
+        const outward = jitterAngle;
+        const sprayAngle = tangent + Math.PI + (Math.random() - 0.5) * 1.1;
+        const speed = Math.random() * 4.2 + 1.8;
+        const vx = Math.cos(sprayAngle) * speed + Math.cos(outward) * 1.1;
+        const vy = Math.sin(sprayAngle) * speed + Math.sin(outward) * 1.1 - 0.4;
+
+        sparks.push(new FireSpark(spawnX, spawnY, vx, vy, 'spark'));
+      }
+
+      // 2. Percikan api acak di sekeliling pinggiran lingkaran foto (Crackle)
+      if (Math.random() < 0.55) {
+        const crackleAngle = Math.random() * Math.PI * 2;
+        const spawnX = centerX + Math.cos(crackleAngle) * radius;
+        const spawnY = centerY + Math.sin(crackleAngle) * radius;
+        const speed = Math.random() * 3.0 + 1.0;
+        const vx = Math.cos(crackleAngle) * speed + (Math.random() - 0.5);
+        const vy = Math.sin(crackleAngle) * speed - 0.8;
+        sparks.push(new FireSpark(spawnX, spawnY, vx, vy, 'spark'));
+      }
+
+      // 3. Butiran bara api keemasan melayang ke atas di atas foto
+      if (Math.random() < 0.35) {
+        const emberAngle = Math.random() * Math.PI * 2;
+        const spawnR = radius * Math.sqrt(Math.random());
+        const spawnX = centerX + Math.cos(emberAngle) * spawnR;
+        const spawnY = centerY + Math.sin(emberAngle) * spawnR;
+        sparks.push(new FireSpark(spawnX, spawnY, (Math.random() - 0.5) * 0.8, -(Math.random() * 1.8 + 0.8), 'ember'));
+      }
+    }
+
+    // Batasi maksimum partikel untuk performa mulus 60 FPS
+    if (sparks.length > 150) {
+      sparks.splice(0, sparks.length - 150);
+    }
+
+    // Update & gambar semua percikan
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      if (sparks[i].update()) {
+        sparks[i].draw(ctx);
+      } else {
+        sparks.splice(i, 1);
+      }
+    }
+
+    animId = requestAnimationFrame(render);
+  }
+
+  animId = requestAnimationFrame(render);
+}
+
 

@@ -34,13 +34,16 @@
        00. PRELOADER / LOADING SCREEN
        ========================================================================== -->
   <div id="preloader" class="preloader-overlay">
+    <!-- Fire Sparks & Embers Canvas (Percikan Api Preloader) -->
+    <canvas id="preloader-sparks-canvas" class="preloader-sparks-canvas"></canvas>
+    
     <div class="preloader-inner text-center">
       <div class="preloader-spinner-ring">
         <div class="preloader-monogram">A &amp; A</div>
       </div>
       <div class="preloader-loading-text">Memuat Undangan Mewah...</div>
       <div class="preloader-progress-track">
-        <div class="preloader-progress-fill"></div>
+        <div id="preloader-progress-bar" class="preloader-progress-fill"></div>
       </div>
     </div>
   </div>
@@ -195,6 +198,9 @@
         <div class="center-portrait-wrap">
           <img src="assets/cover-couple.jpg" alt="Siti Ami & Abdul Azis" class="center-portrait-img">
         </div>
+
+        <!-- Fire Sparks Canvas for Cover Photo (Percikan Api Foto Utama) -->
+        <canvas id="cover-sparks-canvas" class="cover-sparks-canvas"></canvas>
 
         <!-- Initial Monogram Centerpiece (A & A) - Royal Seal Badge -->
         <div class="video-monogram-badge">

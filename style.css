@@ -326,6 +326,35 @@ button {
   box-shadow: 0 0 28px rgba(0, 0, 0, 0.9), 0 0 16px rgba(223, 186, 115, 0.3);
   border: 2.5px solid rgba(223, 186, 115, 0.6);
   position: relative;
+  z-index: 2;
+}
+
+/* Fiery rim aura on center portrait */
+.center-portrait-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 16px rgba(255, 170, 0, 0.35), 0 0 24px rgba(255, 120, 0, 0.3);
+  pointer-events: none;
+  z-index: 3;
+  animation: portraitFireAura 2.2s ease-in-out infinite alternate;
+}
+
+@keyframes portraitFireAura {
+  0% { box-shadow: inset 0 0 12px rgba(255, 170, 0, 0.25), 0 0 18px rgba(255, 100, 0, 0.2); }
+  100% { box-shadow: inset 0 0 24px rgba(255, 200, 50, 0.45), 0 0 32px rgba(255, 140, 0, 0.4); }
+}
+
+/* Cover Photo Sparks Canvas (Percikan Api Foto Utama) */
+.cover-sparks-canvas {
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: calc(100% + 100px);
+  height: calc(100% + 100px);
+  pointer-events: none;
+  z-index: 5;
 }
 
 .center-portrait-img {
@@ -1867,6 +1896,17 @@ button {
   align-items: center;
   justify-content: center;
   transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.8s;
+  overflow: hidden;
+}
+
+/* Canvas Percikan Api Preloader */
+.preloader-sparks-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .preloader-overlay.fade-out {
@@ -1882,6 +1922,8 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  position: relative;
+  z-index: 2;
 }
 
 .preloader-spinner-ring {
@@ -1897,6 +1939,21 @@ button {
   justify-content: center;
   position: relative;
   box-shadow: 0 0 24px rgba(223, 186, 115, 0.35);
+}
+
+.preloader-spinner-ring::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 170, 0, 0.25) 0%, rgba(255, 80, 0, 0) 70%);
+  animation: fireGlowPulse 1.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes fireGlowPulse {
+  0% { transform: scale(0.95); opacity: 0.6; }
+  100% { transform: scale(1.15); opacity: 1; }
 }
 
 @keyframes preloaderSpin {
