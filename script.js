@@ -4,6 +4,9 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. Inisialisasi Preloader / Loading Screen
+  initPreloader();
+
   // 1. Inisialisasi Nama Tamu dari URL Parameter (?to=Nama+Tamu)
   initGuestName();
 
@@ -25,7 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Inisialisasi Virtual Tabur Bunga Restu
   initFlowerShower();
 
-  // 8. Inisialisasi AOS (Animate on Scroll)
+  // 8. Inisialisasi Scroll Progress & Back to Top Button
+  initScrollProgressAndBackToTop();
+
+  // 9. Inisialisasi Galeri Foto Fullscreen Lightbox
+  initGalleryLightbox();
+
+  // 10. Inisialisasi Video Cinema Player & Audio Sync
+  initVideoPlayerSync();
+
+  // 11. Inisialisasi Micro-interaction Ripple Effect
+  initRippleEffect();
+
+  // 12. Inisialisasi AOS (Animate on Scroll)
   if (typeof AOS !== 'undefined') {
     AOS.init({
       duration: 800,
@@ -783,3 +798,515 @@ function switchFamilyTab(tabName) {
     if (buttons[0]) buttons[0].classList.remove('active');
   }
 }
+
+/* ==========================================================================
+   13. PRELOADER & SCREEN TRANSITION
+   ========================================================================== */
+function initPreloader() {
+  const preloader = document.getElementById('preloader');
+  const progressBar = document.getElementById('preloader-progress-bar');
+  if (!preloader) return;
+
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.floor(Math.random() * 20) + 10;
+    if (progress > 90) progress = 90;
+    if (progressBar) progressBar.style.width = progress + '%';
+  }, 100);
+
+  const hidePreloader = () => {
+    clearInterval(interval);
+    if (progressBar) progressBar.style.width = '100%';
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+      setTimeout(() => {
+        preloader.style.display = 'none';
+      }, 600);
+    }, 300);
+  };
+
+  if (document.readyState === 'complete') {
+    hidePreloader();
+  } else {
+    window.addEventListener('load', hidePreloader);
+    setTimeout(hidePreloader, 2500); // Safety fallback timeout
+  }
+}
+
+/* ==========================================================================
+   14. SCROLL PROGRESS BAR & BACK TO TOP BUTTON
+   ========================================================================== */
+function initScrollProgressAndBackToTop() {
+  const progressBar = document.getElementById('scroll-progress');
+  const backToTopBtn = document.getElementById('back-to-top-btn');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+
+    if (progressBar) {
+      progressBar.style.width = `${progress}%`;
+    }
+
+    if (backToTopBtn) {
+      if (scrollTop > 450) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    }
+  }, { passive: true });
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+window.scrollToTop = scrollToTop;
+
+/* ==========================================================================
+   15. FULLSCREEN PHOTO LIGHTBOX GALLERY
+   ========================================================================== */
+const GALLERY_ITEMS = [
+  {
+    src: 'assets/gallery-1.jpg',
+    caption: 'Tatapan Penuh Makna & Bahagia — Siti Ami & Abdul Azis'
+  },
+  {
+    src: 'assets/gallery-2.jpg',
+    caption: 'Dalam Senyuman & Harapan Bersama Menuju Akad Suci'
+  },
+  {
+    src: 'assets/gallery-3.jpg',
+    caption: 'Busana Anggun Klasik & Kehangatan Dua Jiwa'
+  },
+  {
+    src: 'assets/gallery-4.jpg',
+    caption: 'Langkah Awal Meniti Janji Setia Seumur Hidup'
+  },
+  {
+    src: 'assets/gallery-5.jpg',
+    caption: 'Doa dan Ketulusan Hati Dalam Ikatan Suci'
+  },
+  {
+    src: 'assets/gallery-6.jpg',
+    caption: 'The Royal Wedding Moments — Selamanya Berdampingan'
+  }
+];
+
+let currentLightboxIndex = 0;
+let touchStartX = 0;
+let touchEndX = 0;
+
+function initGalleryLightbox() {
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    const lightbox = document.getElementById('gallery-lightbox');
+    if (!lightbox || !lightbox.classList.contains('active')) return;
+
+    if (e.key === 'Escape') {
+      closeLightbox();
+    } else if (e.key === 'ArrowLeft') {
+      prevLightbox();
+    } else if (e.key === 'ArrowRight') {
+      nextLightbox();
+    }
+  });
+
+  // Mobile Touch Swipe Navigation
+  const lightbox = document.getElementById('gallery-lightbox');
+  if (lightbox) {
+    lightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchEndX - touchStartX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          prevLightbox();
+        } else {
+          nextLightbox();
+        }
+      }
+    }, { passive: true });
+  }
+}
+
+function openLightbox(index) {
+  if (typeof index !== 'number' || index < 0 || index >= GALLERY_ITEMS.length) {
+    index = 0;
+  }
+  currentLightboxIndex = index;
+  updateLightboxContent();
+
+  const lightbox = document.getElementById('gallery-lightbox');
+  if (lightbox) {
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+window.openLightbox = openLightbox;
+
+function closeLightbox(event) {
+  if (event && event.target && event.target.closest('.lightbox-content-box') && !event.target.classList.contains('lightbox-close-btn')) {
+    return;
+  }
+  const lightbox = document.getElementById('gallery-lightbox');
+  if (lightbox) {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+window.closeLightbox = closeLightbox;
+
+function prevLightbox(event) {
+  if (event) event.stopPropagation();
+  currentLightboxIndex = (currentLightboxIndex - 1 + GALLERY_ITEMS.length) % GALLERY_ITEMS.length;
+  updateLightboxContent();
+}
+window.prevLightbox = prevLightbox;
+
+function nextLightbox(event) {
+  if (event) event.stopPropagation();
+  currentLightboxIndex = (currentLightboxIndex + 1) % GALLERY_ITEMS.length;
+  updateLightboxContent();
+}
+window.nextLightbox = nextLightbox;
+
+function updateLightboxContent() {
+  const item = GALLERY_ITEMS[currentLightboxIndex];
+  const imgEl = document.getElementById('lightbox-img');
+  const captionEl = document.getElementById('lightbox-caption');
+  const counterEl = document.getElementById('lightbox-counter');
+
+  if (imgEl && item) {
+    imgEl.style.opacity = '0.3';
+    imgEl.src = item.src;
+    imgEl.alt = item.caption;
+    imgEl.onload = () => {
+      imgEl.style.opacity = '1';
+    };
+  }
+  if (captionEl && item) {
+    captionEl.textContent = item.caption;
+  }
+  if (counterEl) {
+    counterEl.textContent = `${currentLightboxIndex + 1} / ${GALLERY_ITEMS.length}`;
+  }
+}
+
+/* ==========================================================================
+   16. CINEMA VIDEO PLAYER & AUDIO SYNC CONTROLLER
+   ========================================================================== */
+let wasBackgroundMusicPlayingBeforeVideo = false;
+
+function initVideoPlayerSync() {
+  const video = document.getElementById('prewedding-video-player');
+  if (!video) return;
+
+  video.addEventListener('play', () => {
+    const playOverlay = document.getElementById('video-play-overlay');
+    const toggleBtnIcon = document.querySelector('#btn-toggle-video-ctrl i');
+    if (playOverlay) playOverlay.classList.add('hidden');
+    if (toggleBtnIcon) toggleBtnIcon.className = 'fa-solid fa-pause';
+
+    // Pause background wedding music while watching video
+    if (isMusicPlaying) {
+      wasBackgroundMusicPlayingBeforeVideo = true;
+      pauseAudio();
+    }
+  });
+
+  video.addEventListener('pause', () => {
+    const playOverlay = document.getElementById('video-play-overlay');
+    const toggleBtnIcon = document.querySelector('#btn-toggle-video-ctrl i');
+    if (playOverlay) playOverlay.classList.remove('hidden');
+    if (toggleBtnIcon) toggleBtnIcon.className = 'fa-solid fa-play';
+
+    // Resume background music if it was playing before
+    if (wasBackgroundMusicPlayingBeforeVideo && !isMusicPlaying) {
+      playAudio();
+      wasBackgroundMusicPlayingBeforeVideo = false;
+    }
+  });
+
+  video.addEventListener('ended', () => {
+    const playOverlay = document.getElementById('video-play-overlay');
+    const toggleBtnIcon = document.querySelector('#btn-toggle-video-ctrl i');
+    if (playOverlay) playOverlay.classList.remove('hidden');
+    if (toggleBtnIcon) toggleBtnIcon.className = 'fa-solid fa-rotate-left';
+
+    if (wasBackgroundMusicPlayingBeforeVideo && !isMusicPlaying) {
+      playAudio();
+      wasBackgroundMusicPlayingBeforeVideo = false;
+    }
+  });
+}
+
+function togglePreweddingVideo() {
+  const video = document.getElementById('prewedding-video-player');
+  if (!video) return;
+
+  if (video.paused || video.ended) {
+    video.play().catch(err => {
+      console.warn("Video playback prevented:", err);
+    });
+  } else {
+    video.pause();
+  }
+}
+window.togglePreweddingVideo = togglePreweddingVideo;
+
+function togglePreweddingMute() {
+  const video = document.getElementById('prewedding-video-player');
+  const muteBtnIcon = document.querySelector('#btn-toggle-video-mute i');
+  if (!video) return;
+
+  video.muted = !video.muted;
+  if (muteBtnIcon) {
+    muteBtnIcon.className = video.muted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high';
+  }
+}
+window.togglePreweddingMute = togglePreweddingMute;
+
+/* ==========================================================================
+   17. PERSONALIZED QR CODE MODAL FOR GUESTS
+   ========================================================================== */
+function openQRModal() {
+  const modal = document.getElementById('qr-modal');
+  const guestDisplay = document.getElementById('qr-guest-display');
+  const qrImg = document.getElementById('qr-code-image');
+  
+  const guestNameEl = document.getElementById('guest-name');
+  const guestName = (guestNameEl ? guestNameEl.textContent : 'Tamu Undangan').trim() || 'Tamu Undangan';
+
+  if (guestDisplay) {
+    guestDisplay.textContent = guestName;
+  }
+
+  // Generate personalized check-in data URL
+  const qrData = encodeURIComponent(`WEDDING: Siti Ami & Abdul Azis | GUEST: ${guestName} | DATE: 06 Des 2026 | LOC: Kp. Buah Gede`);
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${qrData}&color=1a1612&bgcolor=d4af37`;
+
+  if (qrImg) {
+    qrImg.src = qrUrl;
+    qrImg.alt = `QR Code Kehadiran ${guestName}`;
+  }
+
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+window.openQRModal = openQRModal;
+
+function closeQRModal(event) {
+  if (event && event.target && event.target.closest('.modal-card-dark') && !event.target.classList.contains('modal-close-btn') && !event.target.classList.contains('btn-send-wa')) {
+    return;
+  }
+  const modal = document.getElementById('qr-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+window.closeQRModal = closeQRModal;
+
+function downloadQRCode() {
+  const qrImg = document.getElementById('qr-code-image');
+  if (!qrImg || !qrImg.src) return;
+
+  const link = document.createElement('a');
+  link.href = qrImg.src;
+  link.download = `QR-Undangan-Ami-Azis.png`;
+  link.target = '_blank';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showToast('Mengunduh QR Code Undangan...');
+}
+window.downloadQRCode = downloadQRCode;
+
+/* ==========================================================================
+   18. ADMIN DASHBOARD & 1-CLICK CSV/EXCEL DATA EXPORT
+   ========================================================================== */
+function openAdminModal() {
+  const modal = document.getElementById('admin-modal');
+  renderAdminRSVPTable();
+  if (modal) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+window.openAdminModal = openAdminModal;
+
+function closeAdminModal(event) {
+  if (event && event.target && event.target.closest('.modal-card-dark') && !event.target.classList.contains('modal-close-btn')) {
+    return;
+  }
+  const modal = document.getElementById('admin-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+window.closeAdminModal = closeAdminModal;
+
+function renderAdminRSVPTable() {
+  const wishes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_WISHES;
+  const tbody = document.getElementById('admin-rsvp-table-body');
+
+  const totalEl = document.getElementById('admin-total-rsvp');
+  const hadirEl = document.getElementById('admin-total-hadir');
+  const raguEl = document.getElementById('admin-total-ragu');
+  const tidakEl = document.getElementById('admin-total-tidak');
+  const paxEl = document.getElementById('admin-total-pax');
+
+  let countHadir = 0;
+  let countRagu = 0;
+  let countTidak = 0;
+  let totalPax = 0;
+
+  if (tbody) tbody.innerHTML = '';
+
+  wishes.forEach((item, index) => {
+    const paxNum = parseInt(item.pax, 10) || 1;
+    if (item.status === 'Hadir') {
+      countHadir++;
+      totalPax += paxNum;
+    } else if (item.status === 'Belum Pasti') {
+      countRagu++;
+      totalPax += Math.ceil(paxNum * 0.5);
+    } else {
+      countTidak++;
+    }
+
+    if (tbody) {
+      const tr = document.createElement('tr');
+      let statusBadge = `<span class="badge badge-hadir">Hadir</span>`;
+      if (item.status === 'Belum Pasti') {
+        statusBadge = `<span class="badge badge-ragu">Ragu-ragu</span>`;
+      } else if (item.status === 'Tidak Hadir') {
+        statusBadge = `<span class="badge badge-tidak">Tidak Hadir</span>`;
+      }
+
+      tr.innerHTML = `
+        <td class="text-center">${index + 1}</td>
+        <td><strong>${escapeHTML(item.name)}</strong></td>
+        <td>${statusBadge}</td>
+        <td class="text-center">${paxNum} org</td>
+        <td class="table-msg-cell" title="${escapeHTML(item.message)}">${escapeHTML(item.message)}</td>
+        <td class="table-time-cell">${item.timestamp || '-'}</td>
+        <td class="text-center">
+          <button class="btn-delete-row" onclick="deleteWish(${item.id})" title="Hapus Data">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
+  });
+
+  if (totalEl) totalEl.textContent = wishes.length;
+  if (hadirEl) hadirEl.textContent = countHadir;
+  if (raguEl) raguEl.textContent = countRagu;
+  if (tidakEl) tidakEl.textContent = countTidak;
+  if (paxEl) paxEl.textContent = totalPax;
+}
+window.renderAdminRSVPTable = renderAdminRSVPTable;
+
+function deleteWish(id) {
+  if (!confirm('Apakah Anda yakin ingin menghapus data ucapan / konfirmasi ini?')) return;
+
+  let wishes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_WISHES;
+  wishes = wishes.filter(w => w.id !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(wishes));
+
+  renderAdminRSVPTable();
+  if (typeof window.renderWishes === 'function') {
+    window.renderWishes();
+  }
+  showToast('Data berhasil dihapus dari daftar RSVP.');
+}
+window.deleteWish = deleteWish;
+
+function exportRSVPToCSV() {
+  const wishes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_WISHES;
+  if (!wishes || wishes.length === 0) {
+    showToast('Belum ada data RSVP untuk diekspor!');
+    return;
+  }
+
+  // CSV Header
+  const headers = ['No', 'Nama Tamu', 'Konfirmasi Kehadiran', 'Jumlah Pax', 'Ucapan & Doa', 'Waktu Kirim', 'Jumlah Aamiin'];
+  
+  // Format rows with double quotes escaping
+  const csvRows = [headers.join(',')];
+
+  wishes.forEach((w, idx) => {
+    const row = [
+      idx + 1,
+      `"${(w.name || '').replace(/"/g, '""')}"`,
+      `"${(w.status || '').replace(/"/g, '""')}"`,
+      w.pax || 1,
+      `"${(w.message || '').replace(/"/g, '""').replace(/\r?\n/g, ' ')}"`,
+      `"${(w.timestamp || '').replace(/"/g, '""')}"`,
+      w.likes || 0
+    ];
+    csvRows.push(row.join(','));
+  });
+
+  // Include UTF-8 BOM for Microsoft Excel compatibility
+  const csvContent = '\uFEFF' + csvRows.join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', `Data_RSVP_Pernikahan_Ami_Azis_${new Date().toISOString().slice(0, 10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+
+  showToast('Data RSVP berhasil diekspor ke format Excel (.CSV)!');
+}
+window.exportRSVPToCSV = exportRSVPToCSV;
+
+/* ==========================================================================
+   19. BUTTON RIPPLE EFFECT MICRO-INTERACTIONS
+   ========================================================================== */
+function initRippleEffect() {
+  const rippleTargets = document.querySelectorAll('.btn-ripple, .btn-gold, .btn-open-invitation, .btn-action-primary, .btn-action-outline, .btn-copy, .btn-calendar, .btn-send-wa, .btn-export-excel');
+
+  rippleTargets.forEach((btn) => {
+    btn.addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const circle = document.createElement('span');
+      const diameter = Math.max(rect.width, rect.height);
+      const radius = diameter / 2;
+
+      circle.style.width = circle.style.height = `${diameter}px`;
+      circle.style.left = `${e.clientX - rect.left - radius}px`;
+      circle.style.top = `${e.clientY - rect.top - radius}px`;
+      circle.classList.add('ripple-wave');
+
+      const existingRipple = this.querySelector('.ripple-wave');
+      if (existingRipple) {
+        existingRipple.remove();
+      }
+
+      this.appendChild(circle);
+
+      setTimeout(() => {
+        circle.remove();
+      }, 650);
+    });
+  });
+}
+

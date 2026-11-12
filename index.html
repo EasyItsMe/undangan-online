@@ -30,6 +30,24 @@
 </head>
 <body class="locked">
 
+  <!-- ==========================================================================
+       00. PRELOADER / LOADING SCREEN
+       ========================================================================== -->
+  <div id="preloader" class="preloader-overlay">
+    <div class="preloader-inner text-center">
+      <div class="preloader-spinner-ring">
+        <div class="preloader-monogram">A &amp; A</div>
+      </div>
+      <div class="preloader-loading-text">Memuat Undangan Mewah...</div>
+      <div class="preloader-progress-track">
+        <div class="preloader-progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Progress Indicator Bar -->
+  <div id="scroll-progress" class="scroll-progress-bar"></div>
+
   <!-- Background Music (Exact Audio Extracted from Video) -->
   <audio id="wedding-audio" loop preload="auto">
     <source src="wedding-song.mp3" type="audio/mpeg">
@@ -100,7 +118,12 @@
     </button>
   </div>
 
-  <!-- Bottom Navigation Bar -->
+  <!-- Back to Top Button -->
+  <button id="back-to-top-btn" class="back-to-top-btn" onclick="scrollToTop()" aria-label="Kembali ke atas" title="Kembali ke atas">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Bottom Navigation Bar (Comprehensive 8 Sections) -->
   <nav id="bottom-nav" class="bottom-nav">
     <a href="#cover-section" class="nav-item active" title="Beranda">
       <i class="fa-solid fa-home"></i>
@@ -110,9 +133,17 @@
       <i class="fa-solid fa-heart"></i>
       <span>Mempelai</span>
     </a>
+    <a href="#story" class="nav-item" title="Kisah Cinta">
+      <i class="fa-solid fa-book-bookmark"></i>
+      <span>Cerita</span>
+    </a>
     <a href="#acara" class="nav-item" title="Waktu & Tempat">
       <i class="fa-solid fa-calendar-check"></i>
       <span>Acara</span>
+    </a>
+    <a href="#gallery" class="nav-item" title="Galeri Foto">
+      <i class="fa-solid fa-images"></i>
+      <span>Galeri</span>
     </a>
     <a href="#family" class="nav-item" title="Keluarga">
       <i class="fa-solid fa-crown"></i>
@@ -178,12 +209,18 @@
         <p class="guest-salutation">Kepada Yth. Bapak/Ibu/Saudara/i:</p>
         <h3 id="guest-name" class="guest-name-text">Tamu Undangan</h3>
         <p class="guest-sub">Mohon maaf apabila ada kesalahan penulisan nama/gelar</p>
+        <button class="btn-qr-guest-pill" onclick="openQRModal()" title="Buka QR Undangan Digital Anda">
+          <i class="fa-solid fa-qrcode"></i> QR Undangan Saya
+        </button>
       </div>
 
-      <!-- Buka Undangan Button -->
-      <button id="open-invitation-btn" class="video-btn-buka">
-        <i class="fa-solid fa-envelope-open-text"></i> Buka Undangan
-      </button>
+      <!-- Buka Undangan Button with Wax Seal Accent -->
+      <div class="cover-open-actions">
+        <button id="open-invitation-btn" class="video-btn-buka">
+          <span class="wax-seal-mini"><i class="fa-solid fa-stamp"></i></span>
+          <i class="fa-solid fa-envelope-open-text"></i> Buka Undangan
+        </button>
+      </div>
 
     </div>
   </div>
@@ -319,6 +356,9 @@
                 Putri Kedua dari Pasangan:<br>
                 <strong>Bapak Sukmi</strong> &amp; <strong>Ibu Eli</strong>
               </p>
+              <a href="https://instagram.com" target="_blank" rel="noopener" class="instagram-link-pill" title="Instagram Siti Ami">
+                <i class="fa-brands fa-instagram"></i> @sitiami_
+              </a>
             </div>
           </div>
 
@@ -336,6 +376,9 @@
                 Putra Kedua dari Pasangan:<br>
                 <strong>Bapak Sarip</strong> &amp; <strong>Ibu Ruminah</strong>
               </p>
+              <a href="https://instagram.com" target="_blank" rel="noopener" class="instagram-link-pill" title="Instagram Abdul Azis">
+                <i class="fa-brands fa-instagram"></i> @abdulazis_
+              </a>
             </div>
             <div class="oval-portrait-frame">
               <img src="assets/groom.jpg" alt="Abdul Azis" class="oval-img">
@@ -369,6 +412,93 @@
           <p class="khitan-doa-quote">
             "Semoga ananda Andiks Satria dan Raditya Panca menjadi putra yang sholeh, cerdas, berbakti kepada kedua orang tua, agama, nusa, dan bangsa. Aamiin ya Rabbal 'Alamin."
           </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 05: LOVE STORY / KISAH CINTA
+         ========================================================================== -->
+    <section id="story" class="screen-section story-scene text-center">
+      <div class="container">
+        
+        <div class="section-title-wrap" data-aos="fade-up">
+          <span class="video-sub-title">Perjalanan Kasih</span>
+          <h2 class="video-section-heading">Kisah Cinta Kami</h2>
+          <div class="gold-flourish-divider small">
+            <span class="divider-line"></span>
+            <span class="flourish-icon">❧ ❦ ❧</span>
+            <span class="divider-line"></span>
+          </div>
+          <p class="section-desc max-600">
+            "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu..." Setiap langkah perjalanan membawa kami semakin yakin menuju satu ikatan suci.
+          </p>
+        </div>
+
+        <!-- Vertical Interactive Timeline -->
+        <div class="love-story-timeline">
+          
+          <!-- Milestone 1: First Meet -->
+          <div class="timeline-story-item left-item" data-aos="fade-right">
+            <div class="timeline-dot"><i class="fa-solid fa-eye"></i></div>
+            <div class="timeline-card">
+              <span class="timeline-badge-year">Tahun 2021</span>
+              <div class="timeline-polaroid-thumb">
+                <img src="assets/gallery-1.jpg" alt="Pertemuan Pertama">
+              </div>
+              <h3 class="timeline-story-title">Pertemuan Pertama</h3>
+              <p class="timeline-story-desc">
+                Awal mula takdir mempertemukan pandangan kami di Serang. Dari sebuah perkenalan sederhana dan percakapan hangat yang menumbuhkan getar kenyamanan di relung hati.
+              </p>
+            </div>
+          </div>
+
+          <!-- Milestone 2: In Relationship -->
+          <div class="timeline-story-item right-item" data-aos="fade-left">
+            <div class="timeline-dot"><i class="fa-solid fa-heart"></i></div>
+            <div class="timeline-card">
+              <span class="timeline-badge-year">Tahun 2023</span>
+              <div class="timeline-polaroid-thumb">
+                <img src="assets/gallery-3.jpg" alt="Menjalin Komitmen">
+              </div>
+              <h3 class="timeline-story-title">Menjalin Komitmen Kasih</h3>
+              <p class="timeline-story-desc">
+                Dua kepribadian berbeda disatukan dalam ketulusan. Kami belajar saling memahami, melengkapi suka dan duka, serta merajut tekad bersama untuk masa depan.
+              </p>
+            </div>
+          </div>
+
+          <!-- Milestone 3: Engagement -->
+          <div class="timeline-story-item left-item" data-aos="fade-right">
+            <div class="timeline-dot"><i class="fa-solid fa-ring"></i></div>
+            <div class="timeline-card">
+              <span class="timeline-badge-year">Tahun 2025</span>
+              <div class="timeline-polaroid-thumb">
+                <img src="assets/gallery-2.jpg" alt="Ikrar Lamaran">
+              </div>
+              <h3 class="timeline-story-title">Ikrar Pertunangan</h3>
+              <p class="timeline-story-desc">
+                Dengan penuh ketulusan serta doa restu kedua orang tua dan keluarga besar, niat suci kami berlabuh pada hari lamaran. Sebuah cincin menjadi lambang kesungguhan janji.
+              </p>
+            </div>
+          </div>
+
+          <!-- Milestone 4: The Wedding -->
+          <div class="timeline-story-item right-item" data-aos="fade-left">
+            <div class="timeline-dot highlight-crown"><i class="fa-solid fa-crown"></i></div>
+            <div class="timeline-card highlight-gold">
+              <span class="timeline-badge-year gold-badge">06 Desember 2026</span>
+              <div class="timeline-polaroid-thumb">
+                <img src="assets/gallery-6.jpg" alt="Hari Bahagia Pernikahan">
+              </div>
+              <h3 class="timeline-story-title">Hari Bahagia &amp; Sakral</h3>
+              <p class="timeline-story-desc">
+                Saat yang paling dinantikan. Kami mengucap akad suci pernikahan di hadapan saksi dan keluarga tercinta, menyempurnakan ibadah terindah sepanjang hayat menuju surga-Nya.
+              </p>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -453,6 +583,133 @@
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 08: PHOTO GALLERY / GALERI FOTO PREWEDDING
+         ========================================================================== -->
+    <section id="gallery" class="screen-section gallery-scene text-center">
+      <div class="container">
+        
+        <div class="section-title-wrap" data-aos="fade-up">
+          <span class="video-sub-title">Momen Penuh Kasih</span>
+          <h2 class="video-section-heading">Galeri Foto Prewedding</h2>
+          <div class="gold-flourish-divider small">
+            <span class="divider-line"></span>
+            <span class="flourish-icon">❧ 📷 ❧</span>
+            <span class="divider-line"></span>
+          </div>
+          <p class="section-desc max-600">
+            Setiap potret mengabadikan sejuta makna dan cinta dalam perjalanan menuju hari sakral kami.
+          </p>
+        </div>
+
+        <!-- Curated Masonry Photo Grid -->
+        <div class="photo-gallery-grid" data-aos="fade-up">
+          <div class="gallery-photo-item" onclick="openLightbox(0)">
+            <img src="assets/gallery-1.jpg" alt="Janji Kasih dan Doa Restu" loading="lazy">
+            <div class="photo-overlay">
+              <div class="zoom-icon-circle"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+              <span class="photo-caption">Janji Kasih Abadi</span>
+            </div>
+          </div>
+
+          <div class="gallery-photo-item span-tall" onclick="openLightbox(1)">
+            <img src="assets/gallery-4.jpg" alt="Anggun Mempelai Wanita" loading="lazy">
+            <div class="photo-overlay">
+              <div class="zoom-icon-circle"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+              <span class="photo-caption">Anggun Mempelai Wanita</span>
+            </div>
+          </div>
+
+          <div class="gallery-photo-item span-tall" onclick="openLightbox(2)">
+            <img src="assets/gallery-5.jpg" alt="Wibawa Mempelai Pria" loading="lazy">
+            <div class="photo-overlay">
+              <div class="zoom-icon-circle"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+              <span class="photo-caption">Wibawa Mempelai Pria</span>
+            </div>
+          </div>
+
+          <div class="gallery-photo-item" onclick="openLightbox(3)">
+            <img src="assets/gallery-2.jpg" alt="Menapak Hari Bersama Mobil Klasik" loading="lazy">
+            <div class="photo-overlay">
+              <div class="zoom-icon-circle"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+              <span class="photo-caption">Menapak Hari Bersama</span>
+            </div>
+          </div>
+
+          <div class="gallery-photo-item" onclick="openLightbox(4)">
+            <img src="assets/gallery-3.jpg" alt="Tatapan Penuh Ketulusan" loading="lazy">
+            <div class="photo-overlay">
+              <div class="zoom-icon-circle"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+              <span class="photo-caption">Dua Hati Satu Jiwa</span>
+            </div>
+          </div>
+
+          <div class="gallery-photo-item" onclick="openLightbox(5)">
+            <img src="assets/gallery-6.jpg" alt="Kebahagiaan Menuju Hari Sakral" loading="lazy">
+            <div class="photo-overlay">
+              <div class="zoom-icon-circle"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+              <span class="photo-caption">Menuju Hari Bahagia</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         SECTION 09: VIDEO GALLERY & TEASER PREWEDDING
+         ========================================================================== -->
+    <section id="video-gallery" class="screen-section video-gallery-scene text-center">
+      <div class="container">
+        
+        <div class="section-title-wrap" data-aos="fade-up">
+          <span class="video-sub-title">Sinema Romantis</span>
+          <h2 class="video-section-heading">Teaser Video Prewedding</h2>
+          <div class="gold-flourish-divider small">
+            <span class="divider-line"></span>
+            <span class="flourish-icon">❧ 🎬 ❧</span>
+            <span class="divider-line"></span>
+          </div>
+          <p class="section-desc max-600">
+            Sebuah cuplikan visual perjalanan cinta dan rasa syukur kami berdua.
+          </p>
+        </div>
+
+        <!-- Cinema Video Player Card -->
+        <div class="cinema-video-card" data-aos="zoom-in">
+          <div class="video-player-wrapper">
+            <video id="prewedding-video-player" poster="assets/video-thumbnail.jpg" playsinline preload="metadata">
+              <source src="assets/prewedding-video.mp4" type="video/mp4">
+              Browser Anda tidak mendukung pemutar video.
+            </video>
+            
+            <div id="video-play-overlay" class="video-play-overlay" onclick="togglePreweddingVideo()">
+              <div class="video-play-btn-circle">
+                <i class="fa-solid fa-play"></i>
+              </div>
+              <span class="video-duration-badge"><i class="fa-solid fa-film"></i> Tonton Teaser Prewedding (00:40)</span>
+            </div>
+          </div>
+
+          <div class="cinema-card-footer">
+            <div class="video-title-info text-left">
+              <h4 class="video-meta-title">The Wedding Teaser: Siti Ami &amp; Abdul Azis</h4>
+              <p class="video-meta-desc">Kompilasi momen terindah menuju hari pernikahan suci</p>
+            </div>
+            <div class="cinema-controls">
+              <button id="btn-toggle-video-ctrl" class="video-ctrl-btn" onclick="togglePreweddingVideo()" aria-label="Play/Pause Video">
+                <i class="fa-solid fa-play"></i>
+              </button>
+              <button id="btn-toggle-video-mute" class="video-ctrl-btn" onclick="togglePreweddingMute()" aria-label="Mute/Unmute Video">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -782,6 +1039,13 @@
         <div class="footer-gold-monogram">A &amp; A</div>
         <p class="footer-copy-text">The Wedding of Siti Ami &amp; Abdul Azis &copy; 2026.</p>
         <p class="footer-sub-text">Kp. Buah Gede, Ds. Sentul, Kec. Kragilan, Kab. Serang - Banten</p>
+        
+        <!-- Admin & Management Trigger -->
+        <div class="footer-admin-action">
+          <button class="btn-footer-admin" onclick="openAdminModal()">
+            <i class="fa-solid fa-user-shield"></i> Kelola RSVP &amp; Export Data (Admin)
+          </button>
+        </div>
       </div>
     </footer>
 
@@ -793,7 +1057,60 @@
     <span id="toast-message">Teks berhasil disalin!</span>
   </div>
 
-  <!-- MODAL GENERATOR LINK UNDANGAN WHATSAPP -->
+  <!-- MODAL 1: FULLSCREEN PHOTO LIGHTBOX -->
+  <div id="gallery-lightbox" class="lightbox-overlay" onclick="closeLightbox(event)">
+    <button class="lightbox-close-btn" onclick="closeLightbox(event)" aria-label="Tutup">&times;</button>
+    <button class="lightbox-nav-btn prev" onclick="prevLightbox(event)" aria-label="Foto Sebelumnya">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="lightbox-nav-btn next" onclick="nextLightbox(event)" aria-label="Foto Selanjutnya">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <div class="lightbox-content-box" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="Prewedding Fullscreen">
+      <div class="lightbox-caption-bar">
+        <span id="lightbox-counter">1 / 6</span>
+        <p id="lightbox-caption">Foto Prewedding</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: PERSONALIZED QR CODE UNDANGAN -->
+  <div id="qr-modal" class="modal-overlay" onclick="closeQRModal(event)">
+    <div class="modal-card-dark text-center" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeQRModal(event)" aria-label="Tutup">&times;</button>
+      <div class="modal-header justify-center">
+        <div class="qr-icon-circle">
+          <i class="fa-solid fa-qrcode"></i>
+        </div>
+        <div>
+          <h3 class="modal-title">QR Code Undangan Digital</h3>
+          <p class="modal-subtitle">Tunjukkan QR code ini saat tiba di resepsi pernikahan</p>
+        </div>
+      </div>
+      
+      <div class="modal-body">
+        <div class="qr-display-card">
+          <div class="qr-wrapper-gold">
+            <img id="qr-code-image" src="" alt="QR Code Undangan Tamu" class="qr-code-img">
+          </div>
+          <h4 id="qr-guest-display" class="qr-guest-name">Tamu Undangan</h4>
+          <p class="qr-desc-note">Scan untuk melihat detail undangan personal atau tanda kehadiran</p>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-copy-gold" onclick="downloadQRCode()">
+            <i class="fa-solid fa-download"></i> Simpan Gambar QR
+          </button>
+          <button class="btn-send-wa" onclick="closeQRModal(event)">
+            <i class="fa-solid fa-check"></i> Selesai
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: GENERATOR LINK UNDANGAN WHATSAPP -->
   <div id="share-modal" class="modal-overlay" onclick="closeShareModal(event)">
     <div class="modal-card-dark" onclick="event.stopPropagation()">
       <button class="modal-close-btn" onclick="closeShareModal(event)" aria-label="Tutup">&times;</button>
@@ -826,6 +1143,82 @@
             <i class="fa-brands fa-whatsapp"></i> Bagikan ke WhatsApp
           </a>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: ADMIN DASHBOARD & DATA EXPORT (EXCEL / CSV) -->
+  <div id="admin-modal" class="modal-overlay" onclick="closeAdminModal(event)">
+    <div class="modal-card-dark modal-large" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeAdminModal(event)" aria-label="Tutup">&times;</button>
+      
+      <div class="modal-header">
+        <div class="admin-icon-circle">
+          <i class="fa-solid fa-chart-pie"></i>
+        </div>
+        <div>
+          <h3 class="modal-title">Dashboard Admin &amp; Data RSVP</h3>
+          <p class="modal-subtitle">Kelola dan pantau seluruh data konfirmasi kehadiran tamu</p>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Summary Stats Grid -->
+        <div class="admin-stats-grid">
+          <div class="stat-card">
+            <span class="stat-number" id="admin-total-rsvp">0</span>
+            <span class="stat-label">Total Konfirmasi</span>
+          </div>
+          <div class="stat-card hadir">
+            <span class="stat-number" id="admin-total-hadir">0</span>
+            <span class="stat-label">Pasti Hadir</span>
+          </div>
+          <div class="stat-card ragu">
+            <span class="stat-number" id="admin-total-ragu">0</span>
+            <span class="stat-label">Masih Ragu</span>
+          </div>
+          <div class="stat-card tidak">
+            <span class="stat-number" id="admin-total-tidak">0</span>
+            <span class="stat-label">Tidak Hadir</span>
+          </div>
+          <div class="stat-card pax">
+            <span class="stat-number" id="admin-total-pax">0</span>
+            <span class="stat-label">Estimasi Porsi (Pax)</span>
+          </div>
+        </div>
+
+        <!-- Export Action Banner -->
+        <div class="admin-action-banner">
+          <div>
+            <h4 class="export-title">Unduh Laporan RSVP Tamu</h4>
+            <p class="export-desc">Download format file .CSV yang kompatibel langsung dengan Microsoft Excel / Google Sheets.</p>
+          </div>
+          <button class="btn-export-excel" onclick="exportRSVPToCSV()">
+            <i class="fa-solid fa-file-excel"></i> Export ke Excel (.CSV)
+          </button>
+        </div>
+
+        <!-- Table of RSVPs -->
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Tamu</th>
+                <th>Status</th>
+                <th>Pax</th>
+                <th>Ucapan &amp; Doa</th>
+                <th>Waktu</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="admin-rsvp-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </div>
