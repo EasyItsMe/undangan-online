@@ -705,7 +705,7 @@ function openShareModal() {
 }
 
 function closeShareModal(event) {
-  if (event && event.target && event.target.closest('.modal-card') && !event.target.classList.contains('modal-close-btn')) {
+  if (event && event.target && event.target.closest('.modal-card-dark') && !event.target.classList.contains('modal-close-btn')) {
     return;
   }
   const modal = document.getElementById('share-modal');
@@ -769,7 +769,7 @@ function copyShareText() {
 function switchFamilyTab(tabName) {
   const tabWanita = document.getElementById('tab-wanita');
   const tabPria = document.getElementById('tab-pria');
-  const buttons = document.querySelectorAll('.family-tabs .tab-btn');
+  const buttons = document.querySelectorAll('.family-tabs-row .family-tab-btn');
 
   if (tabName === 'wanita') {
     if (tabWanita) tabWanita.classList.add('active');

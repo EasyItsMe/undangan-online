@@ -141,8 +141,23 @@
       <div class="sparkling-ring-wrapper">
         <!-- SVG Animated Ring with Comet Trail -->
         <svg class="golden-ring-svg" viewBox="0 0 320 320">
+          <defs>
+            <linearGradient id="goldRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fff8db" stop-opacity="1"/>
+              <stop offset="35%" stop-color="#f9e8b2" stop-opacity="0.95"/>
+              <stop offset="70%" stop-color="#dfba73" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#8f6b1e" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="goldRingGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3.5" result="glow" />
+              <feMerge>
+                <feMergeNode in="glow" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
           <circle class="ring-bg" cx="160" cy="160" r="140" />
-          <circle class="ring-comet" cx="160" cy="160" r="140" />
+          <circle class="ring-comet" cx="160" cy="160" r="140" filter="url(#goldRingGlow)" />
         </svg>
 
         <!-- Center Couple Portrait -->
@@ -150,8 +165,8 @@
           <img src="assets/cover-couple.jpg" alt="Siti Ami & Abdul Azis" class="center-portrait-img">
         </div>
 
-        <!-- Initial Monogram Centerpiece (A & A) -->
-        <div class="video-monogram-overlay">
+        <!-- Initial Monogram Centerpiece (A & A) - Royal Seal Badge -->
+        <div class="video-monogram-badge">
           <span class="monogram-letter-left">A</span>
           <span class="monogram-ampersand">&amp;</span>
           <span class="monogram-letter-right">A</span>

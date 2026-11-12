@@ -103,22 +103,22 @@ button {
    ========================================================================== */
 .fixed-corner-foliage {
   position: fixed;
-  width: 160px;
-  height: 160px;
+  width: clamp(80px, 20vw, 150px);
+  height: clamp(80px, 20vw, 150px);
   pointer-events: none;
   z-index: 10;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
-  animation: leafSway 6s infinite alternate ease-in-out;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.65));
+  animation: leafSway 7s infinite alternate ease-in-out;
 }
 
 .fixed-corner-foliage.top-left {
-  top: -10px;
-  left: -10px;
+  top: -4px;
+  left: -4px;
 }
 
 .fixed-corner-foliage.bottom-right {
-  bottom: -10px;
-  right: -10px;
+  bottom: -4px;
+  right: -4px;
 }
 
 @keyframes leafSway {
@@ -178,21 +178,22 @@ button {
    VIDEO DIVIDER & TITLES
    ========================================================================== */
 .video-top-title {
-  font-family: var(--font-serif);
-  font-size: 1.55rem;
-  letter-spacing: 1px;
+  font-family: var(--font-cinzel);
+  font-size: clamp(1.15rem, 3.8vw, 1.55rem);
+  letter-spacing: 3px;
+  text-transform: uppercase;
   color: var(--gold-bright);
   font-weight: 400;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .main-couple-title {
   font-family: var(--font-cursive);
-  font-size: 3.8rem;
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
   color: var(--gold-primary);
   line-height: 1.15;
   margin-bottom: 12px;
-  text-shadow: 0 4px 18px rgba(223, 186, 115, 0.3);
+  text-shadow: 0 4px 18px rgba(223, 186, 115, 0.35);
 }
 
 .khitanan-sub-badge {
@@ -201,7 +202,7 @@ button {
   border: 1px solid rgba(223, 186, 115, 0.35);
   padding: 5px 18px;
   border-radius: var(--radius-full);
-  font-size: 0.86rem;
+  font-size: clamp(0.78rem, 2.4vw, 0.86rem);
   color: var(--gold-bright);
   margin-bottom: 20px;
 }
@@ -234,7 +235,7 @@ button {
 
 .video-section-heading {
   font-family: var(--font-serif);
-  font-size: 2.1rem;
+  font-size: clamp(1.75rem, 5.5vw, 2.2rem);
   color: var(--gold-bright);
   font-weight: 600;
   margin-bottom: 6px;
@@ -242,7 +243,7 @@ button {
 
 .video-sub-title {
   font-family: var(--font-cinzel);
-  font-size: 0.78rem;
+  font-size: clamp(0.72rem, 2vw, 0.78rem);
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--text-muted-gold);
@@ -280,9 +281,9 @@ button {
 /* Sparkling Golden Ring (Frame 2 - 3) */
 .sparkling-ring-wrapper {
   position: relative;
-  width: 260px;
-  height: 260px;
-  margin: 0 auto 28px;
+  width: clamp(210px, 58vw, 260px);
+  height: clamp(210px, 58vw, 260px);
+  margin: 0 auto clamp(20px, 5vw, 30px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -298,7 +299,7 @@ button {
 
 .ring-bg {
   fill: none;
-  stroke: rgba(223, 186, 115, 0.2);
+  stroke: rgba(223, 186, 115, 0.25);
   stroke-width: 2px;
 }
 
@@ -309,7 +310,6 @@ button {
   stroke-dasharray: 880;
   stroke-dashoffset: 880;
   animation: drawRing 3s ease-out forwards;
-  filter: drop-shadow(0 0 8px #dfba73);
 }
 
 @keyframes drawRing {
@@ -319,12 +319,12 @@ button {
 }
 
 .center-portrait-wrap {
-  width: 210px;
-  height: 210px;
+  width: clamp(170px, 46vw, 210px);
+  height: clamp(170px, 46vw, 210px);
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
-  border: 2px solid rgba(223, 186, 115, 0.4);
+  box-shadow: 0 0 28px rgba(0, 0, 0, 0.9), 0 0 16px rgba(223, 186, 115, 0.3);
+  border: 2.5px solid rgba(223, 186, 115, 0.6);
   position: relative;
 }
 
@@ -332,47 +332,55 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.92) contrast(1.05);
+  filter: brightness(0.98) contrast(1.05);
 }
 
-/* Calligraphic Monogram Overlay (A & A) */
-.video-monogram-overlay {
+/* Royal Monogram Signet Badge (A & A) at the bottom rim */
+.video-monogram-badge {
   position: absolute;
-  inset: 0;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #1b201d, #0d0f0e);
+  border: 1.5px solid var(--gold-primary);
+  border-radius: var(--radius-full);
+  padding: 3px 18px 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  pointer-events: none;
-  background: rgba(13, 15, 14, 0.38);
-  border-radius: 50%;
+  gap: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8), 0 0 12px rgba(223, 186, 115, 0.35);
+  z-index: 5;
+  white-space: nowrap;
 }
 
-.monogram-letter-left,
-.monogram-letter-right {
+.video-monogram-badge .monogram-letter-left,
+.video-monogram-badge .monogram-letter-right {
   font-family: var(--font-cursive);
-  font-size: 3.4rem;
+  font-size: 1.7rem;
   color: var(--gold-bright);
-  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
   line-height: 1;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-.monogram-ampersand {
+.video-monogram-badge .monogram-ampersand {
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 0.95rem;
   font-style: italic;
   color: var(--gold-primary);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  line-height: 1;
 }
 
 /* Video Guest Card */
 .video-guest-card {
-  background: rgba(25, 29, 26, 0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(22, 26, 23, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(223, 186, 115, 0.3);
   border-radius: var(--radius-md);
-  padding: 16px 20px;
-  margin-bottom: 24px;
+  padding: 14px 20px;
+  margin-bottom: 22px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .guest-salutation {
@@ -383,7 +391,7 @@ button {
 
 .guest-name-text {
   font-family: var(--font-serif);
-  font-size: 1.45rem;
+  font-size: clamp(1.25rem, 4.5vw, 1.55rem);
   color: var(--gold-bright);
   font-weight: 600;
   margin-bottom: 4px;
@@ -404,18 +412,31 @@ button {
   background: linear-gradient(135deg, #dfba73, #a98036);
   color: #121413;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: clamp(0.88rem, 2.5vw, 0.96rem);
+  letter-spacing: 0.5px;
   padding: 13px 32px;
   border-radius: var(--radius-full);
-  box-shadow: 0 6px 20px rgba(223, 186, 115, 0.4);
+  box-shadow: 0 6px 22px rgba(223, 186, 115, 0.45);
   cursor: pointer;
   transition: var(--transition);
+  animation: pulseGold 2.8s infinite;
 }
 
 .video-btn-buka:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
   background: linear-gradient(135deg, #f9e8b2, #dfba73);
-  box-shadow: 0 8px 25px rgba(223, 186, 115, 0.6);
+  box-shadow: 0 8px 30px rgba(223, 186, 115, 0.65);
+}
+
+@keyframes pulseGold {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(223, 186, 115, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 8px 30px rgba(223, 186, 115, 0.7);
+    transform: scale(1.02);
+  }
 }
 
 /* ==========================================================================
@@ -523,19 +544,24 @@ button {
 }
 
 .ripped-paper-card {
-  background: #fdfdfd;
+  background: #fdfbf7;
   padding: 10px 10px 24px 10px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+  box-shadow: 
+    0 16px 36px rgba(0, 0, 0, 0.85),
+    0 3px 8px rgba(0, 0, 0, 0.4);
   border-radius: 2px;
+  border: 1px solid rgba(220, 210, 195, 0.35);
   max-width: 290px;
-  transition: transform 0.4s ease;
+  margin: 0 auto;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .ripped-paper-card img {
   width: 100%;
-  height: 180px;
+  height: clamp(160px, 42vw, 195px);
   object-fit: cover;
-  filter: contrast(1.05);
+  border-radius: 1px;
+  filter: contrast(1.04) brightness(0.98);
 }
 
 .top-polaroid .ripped-paper-card {
@@ -561,21 +587,21 @@ button {
 }
 
 .bismillah-sub {
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, 4.5vw, 1.8rem);
   color: var(--gold-bright);
   margin-bottom: 14px;
 }
 
 .greeting-paragraph {
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 3.2vw, 1.15rem);
   color: var(--gold-bright);
   line-height: 1.8;
   margin-bottom: 14px;
 }
 
 .greeting-ayah {
-  font-size: 0.92rem;
+  font-size: clamp(0.82rem, 2.5vw, 0.92rem);
   color: var(--text-muted-gold);
   line-height: 1.7;
 }
@@ -586,14 +612,14 @@ button {
 .couple-diagonal-layout {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 28px;
   margin-top: 35px;
 }
 
 .couple-row-item {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: clamp(16px, 4.5vw, 30px);
 }
 
 .couple-row-item.groom-row {
@@ -602,13 +628,14 @@ button {
 
 /* Oval Portrait Frame as in video */
 .oval-portrait-frame {
-  width: 140px;
-  height: 190px;
-  border-radius: 90px;
+  width: clamp(105px, 28vw, 145px);
+  height: clamp(145px, 39vw, 200px);
+  border-radius: 999px;
   overflow: hidden;
-  border: 2px solid var(--gold-primary);
-  box-shadow: 0 0 20px rgba(223, 186, 115, 0.25);
+  border: 2.5px solid var(--gold-primary);
+  box-shadow: 0 0 22px rgba(223, 186, 115, 0.3), 0 8px 24px rgba(0, 0, 0, 0.7);
   flex-shrink: 0;
+  position: relative;
 }
 
 .oval-img {
@@ -632,7 +659,7 @@ button {
 
 .cursive-couple-name {
   font-family: var(--font-cursive);
-  font-size: 3rem;
+  font-size: clamp(2.3rem, 6.8vw, 3.4rem);
   color: var(--gold-bright);
   line-height: 1.1;
   margin-bottom: 4px;
@@ -641,17 +668,18 @@ button {
 
 .couple-relation {
   font-family: var(--font-cinzel);
-  font-size: 0.78rem;
-  letter-spacing: 2px;
+  font-size: clamp(0.72rem, 2vw, 0.8rem);
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--gold-primary);
   margin-bottom: 6px;
+  font-weight: 600;
 }
 
 .couple-parentage {
-  font-size: 0.9rem;
+  font-size: clamp(0.82rem, 2.5vw, 0.92rem);
   color: var(--text-muted-gold);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .couple-parentage strong {
@@ -661,10 +689,11 @@ button {
 .video-center-ampersand {
   text-align: center;
   font-family: var(--font-cursive);
-  font-size: 3.5rem;
+  font-size: clamp(2.8rem, 7vw, 3.6rem);
   color: var(--gold-primary);
   line-height: 1;
-  margin: -10px 0;
+  margin: -8px 0;
+  text-shadow: 0 2px 12px rgba(223, 186, 115, 0.3);
 }
 
 /* KHITANAN SPECIAL CARD */
@@ -711,7 +740,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: clamp(10px, 3vw, 18px);
   margin-bottom: 18px;
 }
 
@@ -719,8 +748,10 @@ button {
   background: #101211;
   border: 1px solid rgba(223, 186, 115, 0.25);
   border-radius: var(--radius-md);
-  padding: 14px 20px;
-  min-width: 130px;
+  padding: 14px 16px;
+  flex: 1;
+  max-width: 190px;
+  min-width: 120px;
 }
 
 .boy-icon {
@@ -731,8 +762,10 @@ button {
 
 .boy-name-title {
   font-family: var(--font-serif);
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 3vw, 1.15rem);
   color: var(--gold-bright);
+  font-weight: 600;
+  margin-top: 4px;
 }
 
 .boy-role {
@@ -742,8 +775,9 @@ button {
 
 .boy-and {
   font-family: var(--font-cursive);
-  font-size: 2.2rem;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
   color: var(--gold-primary);
+  flex-shrink: 0;
 }
 
 .khitan-doa-quote {
@@ -758,44 +792,45 @@ button {
    ========================================================================== */
 .video-event-intro {
   font-family: var(--font-serif);
-  font-size: 1.45rem;
+  font-size: clamp(1.15rem, 3.5vw, 1.45rem);
   color: var(--gold-bright);
-  line-height: 1.5;
+  line-height: 1.6;
   font-weight: 400;
 }
 
 .exact-date-hero-box {
-  margin: 30px auto;
+  margin: 28px auto;
   max-width: 480px;
 }
 
 .video-day-label {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 3.8vw, 1.55rem);
   color: var(--gold-bright);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 
 .video-big-date-number {
   font-family: var(--font-serif);
-  font-size: 3.2rem;
+  font-size: clamp(2.4rem, 7.5vw, 3.4rem);
   font-weight: 700;
-  color: var(--gold-bright);
-  letter-spacing: -0.5px;
+  color: #dfba73;
+  letter-spacing: 0.5px;
   line-height: 1.1;
   margin-bottom: 12px;
 }
 
 .video-date-underline {
-  width: 260px;
-  height: 2px;
-  background: var(--gold-primary);
-  margin: 0 auto 16px;
+  width: clamp(180px, 50%, 260px);
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+  margin: 0 auto 14px;
 }
 
 .video-hijri-badge {
   font-family: var(--font-cinzel);
-  font-size: 0.88rem;
+  font-size: clamp(0.78rem, 2.4vw, 0.88rem);
   color: var(--text-muted-gold);
   letter-spacing: 2px;
   margin-bottom: 22px;
@@ -803,7 +838,7 @@ button {
 
 .video-venue-address {
   font-family: var(--font-serif);
-  font-size: 1.1rem;
+  font-size: clamp(0.92rem, 2.8vw, 1.08rem);
   color: var(--text-gold-light);
   line-height: 1.7;
 }
@@ -816,25 +851,32 @@ button {
 .event-cards-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 18px;
-  margin: 35px 0;
+  gap: 16px;
+  margin: 32px 0 28px;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 580px) {
   .event-cards-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 .video-agenda-card {
-  background: rgba(25, 29, 26, 0.7);
+  background: rgba(22, 26, 23, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(223, 186, 115, 0.3);
   border-radius: var(--radius-md);
-  padding: 24px 18px;
+  padding: 22px 18px;
   text-align: center;
+  transition: var(--transition);
 }
 
 .video-agenda-card.highlight {
+  border-color: var(--gold-primary);
+  background: rgba(28, 34, 29, 0.88);
+  box-shadow: 0 0 22px rgba(223, 186, 115, 0.22);
+}
   border-color: var(--gold-primary);
   background: rgba(30, 36, 32, 0.85);
   box-shadow: 0 0 20px rgba(223, 186, 115, 0.2);
@@ -1013,15 +1055,15 @@ button {
   gap: 8px;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 580px) {
   .honored-names-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 10px 14px;
+    gap: 8px 12px;
   }
 }
 
 .name-pill {
-  background: #101211;
+  background: #111412;
   border: 1px solid rgba(223, 186, 115, 0.2);
   border-radius: var(--radius-sm);
   padding: 8px 12px;
@@ -1030,6 +1072,12 @@ button {
   display: flex;
   align-items: baseline;
   gap: 6px;
+  transition: all 0.25s ease;
+}
+
+.name-pill:hover {
+  border-color: rgba(223, 186, 115, 0.45);
+  background: #161a17;
 }
 
 .name-pill.full-span {
@@ -1038,16 +1086,25 @@ button {
   background: rgba(223, 186, 115, 0.12);
   border-color: var(--gold-primary);
   font-weight: 700;
+  padding: 10px 14px;
 }
 
 .name-pill span {
   color: var(--gold-primary);
   font-weight: 700;
+  min-width: 20px;
+  flex-shrink: 0;
+}
+
+.name-pill strong {
+  color: var(--gold-bright);
+  font-weight: 600;
 }
 
 .name-pill small {
   color: var(--text-muted-gold);
-  font-size: 0.75rem;
+  font-size: 0.76rem;
+  margin-left: 2px;
 }
 
 /* ==========================================================================
@@ -1221,28 +1278,44 @@ button {
 .gift-cards-row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
-  margin-top: 35px;
-  margin-bottom: 30px;
+  gap: 18px;
+  margin-top: 32px;
+  margin-bottom: 28px;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 620px) {
+  .gift-cards-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gift-cards-row .qris-box {
+    grid-column: 1 / -1;
+    max-width: 360px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (min-width: 860px) {
   .gift-cards-row {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .gift-cards-row .qris-box {
+    grid-column: auto;
+    max-width: none;
   }
 }
 
 .bank-card-luxury {
-  background: linear-gradient(135deg, #181d1a, #0e110f);
+  background: linear-gradient(135deg, #1b201d, #0d0f0e);
   border: 1px solid rgba(223, 186, 115, 0.35);
   border-radius: var(--radius-md);
-  padding: 22px 18px;
+  padding: 22px 20px;
   text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  min-height: 220px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+  min-height: 215px;
 }
 
 .bank-card-luxury.qris-box {
@@ -1255,7 +1328,7 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .brand-name {
@@ -1277,11 +1350,12 @@ button {
 
 .card-acc-num {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.35rem;
+  font-size: clamp(1.15rem, 3.6vw, 1.35rem);
   font-weight: 700;
   color: #ffffff;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   margin-bottom: 6px;
+  word-break: break-all;
 }
 
 .card-holder-name {
@@ -1380,15 +1454,15 @@ button {
 
 .thankyou-paragraph-1 {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: clamp(1.15rem, 3.5vw, 1.35rem);
   color: var(--gold-bright);
   line-height: 1.8;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .thankyou-paragraph-2 {
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 3vw, 1.15rem);
   color: var(--gold-primary);
   line-height: 1.7;
 }
@@ -1403,7 +1477,7 @@ button {
 }
 
 .closing-polaroid .ripped-paper-card img {
-  height: 220px;
+  height: clamp(180px, 46vw, 220px);
 }
 
 .video-yang-berbahagia-block {
@@ -1419,17 +1493,20 @@ button {
 
 .closing-cursive-names {
   font-family: var(--font-cursive);
-  font-size: 3.8rem;
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
   color: var(--gold-bright);
   line-height: 1.15;
   margin-bottom: 18px;
+  text-shadow: 0 4px 18px rgba(223, 186, 115, 0.35);
 }
 
 .closing-ampersand {
-  font-family: var(--font-serif);
-  font-size: 1.8rem;
-  font-style: italic;
+  font-family: var(--font-cursive);
+  font-size: clamp(2rem, 5.5vw, 2.6rem);
   color: var(--gold-primary);
+  line-height: 1;
+  display: inline-block;
+  margin: 4px 0;
 }
 
 .closing-family-list {
@@ -1445,9 +1522,9 @@ button {
 
 /* FOOTER */
 .video-footer {
-  background: #090b0a;
+  background: #080908;
   border-top: 1px solid rgba(223, 186, 115, 0.2);
-  padding: 26px 20px 85px;
+  padding: 30px 20px calc(95px + env(safe-area-inset-bottom, 0px));
 }
 
 .footer-gold-monogram {
@@ -1474,21 +1551,22 @@ button {
    ========================================================================== */
 .music-floating-btn {
   position: fixed;
-  bottom: 84px;
-  right: 20px;
-  width: 48px;
-  height: 48px;
+  bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  right: 18px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background: rgba(20, 24, 21, 0.88);
-  backdrop-filter: blur(8px);
+  background: rgba(20, 24, 21, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1.5px solid var(--gold-primary);
   color: var(--gold-bright);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   z-index: 998;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
   transition: var(--transition);
 }
 
@@ -1522,11 +1600,11 @@ button {
 
 .floating-actions-group {
   position: fixed;
-  bottom: 84px;
-  left: 20px;
+  bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  left: 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   z-index: 998;
 }
 
@@ -1560,12 +1638,13 @@ button {
   transition: var(--transition);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   .flower-floating-btn,
   .share-floating-btn {
-    padding: 11px;
-    width: 44px;
-    height: 44px;
+    padding: 10px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
     justify-content: center;
   }
   .action-btn-label {
@@ -1576,18 +1655,19 @@ button {
 /* Bottom Nav */
 .bottom-nav {
   position: fixed;
-  bottom: 12px;
+  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
   background: rgba(18, 22, 19, 0.94);
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(223, 186, 115, 0.35);
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 6px 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  gap: 2px;
+  padding: 5px 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
   z-index: 990;
   max-width: 95vw;
 }
@@ -1597,24 +1677,24 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 6px 10px;
+  padding: 5px 8px;
   border-radius: var(--radius-full);
   color: var(--text-muted-gold);
-  font-size: 0.72rem;
+  font-size: clamp(0.64rem, 1.9vw, 0.72rem);
   font-weight: 600;
   gap: 2px;
-  min-width: 50px;
+  min-width: 46px;
   transition: var(--transition);
 }
 
 .nav-item i {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
 }
 
 .nav-item.active,
 .nav-item:hover {
   color: var(--gold-bright);
-  background: rgba(223, 186, 115, 0.15);
+  background: rgba(223, 186, 115, 0.18);
 }
 
 /* Toast */
